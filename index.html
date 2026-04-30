@@ -39,14 +39,15 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 1.6s ease;
+      transition: opacity 1.8s ease;
+      opacity: 1;
     }
 
     #loading-screen::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(rgba(0,0,0,0.85), rgba(50,20,0,0.90));
+      background: linear-gradient(rgba(0,0,0,0.88), rgba(60,25,0,0.92));
       z-index: 1;
     }
 
@@ -65,7 +66,7 @@
       text-shadow: 0 0 25px #ff5500, 0 0 50px #ffaa00;
       margin-bottom: 15px;
       line-height: 1.35;
-      animation: glitch-loading 2s infinite alternate;
+      animation: glitch-loading 2.2s infinite alternate;
     }
 
     @keyframes glitch-loading {
@@ -108,7 +109,7 @@
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #ffaa00, #ff7700, #ffaa00);
-      transition: width 0.45s linear;
+      transition: width 0.4s linear;
       box-shadow: 0 0 20px #ff8800;
     }
 
@@ -128,7 +129,7 @@
       z-index: 2;
       text-align: center;
       opacity: 0;
-      transition: opacity 1.8s ease;
+      transition: opacity 2s ease;
     }
 
     .container.loaded {
@@ -156,7 +157,6 @@
       text-shadow: 0 0 15px #ff8800;
     }
 
-    /* PROFILE CARD */
     .profile-card {
       position: relative;
       width: 210px;
@@ -182,18 +182,12 @@
       filter: brightness(1.1) contrast(1.15);
     }
 
-    /* INFO FOUNDER BARU */
     .founder-info {
       margin: 15px 0 40px;
       color: #ffdd88;
       font-size: 1.15rem;
       line-height: 1.8;
       text-shadow: 0 0 10px #ffaa00;
-    }
-
-    .founder-info p {
-      margin: 6px 0;
-      letter-spacing: 2px;
     }
 
     .form-box {
@@ -282,10 +276,10 @@
   <div id="loading-screen">
     <div class="loading-content">
       <div class="loading-title">
-        SELAMAT DATANG DI WEBSITE<br>
-        TEAM THE BIG OFFROAD LEAGUE
+        SELAMAT DATANG DI<br>
+        THE BIG OFFROAD LEAGUE
       </div>
-      <div class="loading-subtitle">BY MARCEL INDONESIA</div>
+      <div class="loading-subtitle">TEAM MARCEL INDONESIA</div>
       
       <div class="progress-percentage" id="percentage">0%</div>
       
@@ -306,7 +300,6 @@
       <div class="subtitle">TEAM MARCEL</div>
     </header>
 
-    <!-- PROFILE CARD -->
     <div class="profile-card">
       <img 
         src="https://media.craiyon.com/2025-08-25/B_IkxjUoRCGtmx_j_YW4cw.webp" 
@@ -315,7 +308,6 @@
       >
     </div>
 
-    <!-- INFO FOUNDER BARU -->
     <div class="founder-info">
       <p>[FOUNDER: MARCEL]</p>
       <p>[USERNAME GAME: BOTMARCEL]</p>
@@ -403,8 +395,8 @@
   </div>
 
   <script>
-    // Loading Screen
-    window.addEventListener('load', () => {
+    // ================== LOADING SCREEN SETIAP KALI MASUK ==================
+    function startLoading() {
       const loadingScreen = document.getElementById('loading-screen');
       const mainContent = document.getElementById('main-content');
       const progressBar = document.getElementById('progress');
@@ -412,40 +404,59 @@
       const loadingText = document.getElementById('loading-text');
 
       let progress = 0;
+      loadingScreen.style.opacity = '1';
+      loadingScreen.style.display = 'flex';
+      mainContent.style.opacity = '0';
 
       const fakeLoading = setInterval(() => {
-        progress += Math.random() * 3.5 + 1.8;
+        progress += Math.random() * 4 + 2.5;   // percepat sedikit
 
         if (progress > 100) progress = 100;
 
         progressBar.style.width = progress + '%';
         percentageText.textContent = Math.floor(progress) + '%';
 
-        if (progress < 35) loadingText.textContent = "MEMUAT KENDARAAN OFFROAD...";
-        else if (progress < 60) loadingText.textContent = "MENYIAPKAN TRACK BALAP...";
-        else if (progress < 82) loadingText.textContent = "MENYAMBUNGKAN KE SERVER TEAM...";
-        else if (progress < 97) loadingText.textContent = "HAMPIR SELESAI...";
-        else loadingText.textContent = "SELAMAT DATANG DI TEAM!";
-        
+        // Ubah teks loading
+        if (progress < 30) loadingText.textContent = "MEMUAT KENDARAAN OFFROAD...";
+        else if (progress < 55) loadingText.textContent = "MENYIAPKAN TRACK BALAP...";
+        else if (progress < 75) loadingText.textContent = "MENYAMBUNGKAN KE SERVER TEAM...";
+        else if (progress < 92) loadingText.textContent = "FINAL CHECKING...";
+        else loadingText.textContent = "SELAMAT DATANG DI TEAM MARCEL!";
+
         if (progress >= 100) {
           clearInterval(fakeLoading);
+          
           setTimeout(() => {
             loadingScreen.style.opacity = '0';
+            
             setTimeout(() => {
               loadingScreen.style.display = 'none';
               mainContent.classList.add('loaded');
-            }, 1600);
-          }, 800);
+              mainContent.style.opacity = '1';
+            }, 1800);
+          }, 600);
         }
-      }, 160);
+      }, 120); // lebih cepat dari sebelumnya
+    }
+
+    // Jalankan loading setiap kali halaman dimuat
+    window.addEventListener('load', startLoading);
+
+    // Optional: Jika ingin loading juga muncul saat navigasi kembali (browser back)
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        startLoading();
+      }
     });
 
-    // Glitch effect
+    // Glitch effect untuk judul utama
     const glitchText = document.querySelector('.glitch');
     setInterval(() => {
-      glitchText.style.opacity = 0.87;
-      setTimeout(() => { glitchText.style.opacity = 1; }, 95);
-    }, 4800);
+      if (glitchText) {
+        glitchText.style.opacity = 0.85;
+        setTimeout(() => { glitchText.style.opacity = 1; }, 110);
+      }
+    }, 5200);
   </script>
 
 </body>
