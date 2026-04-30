@@ -1,1 +1,423 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>THE BIG OFFROAD LEAGUE - BY MARCEL INDONESIA</title>
+  <link rel="icon" href="IMG_20260401_051554.jpg">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ================== BACKGROUND UTAMA ================== */
+    body {
+      background: #000000 url('https://i.ibb.co/vxwgxSR6/IMG-20260501-015200.jpg') center/cover no-repeat fixed;
+      color: #ffeedd;
+      font-family: 'Courier New', Courier, monospace;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(40,15,0,0.80));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ================== LOADING SCREEN ================== */
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #000 url('https://i.ibb.co/4RybTbRq/your-loading-image.jpg') center/cover no-repeat fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 1.6s ease;
+    }
+
+    #loading-screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(50,20,0,0.90));
+      z-index: 1;
+    }
+
+    .loading-content {
+      text-align: center;
+      z-index: 2;
+      position: relative;
+    }
+
+    .loading-title {
+      color: #ffaa00;
+      font-size: clamp(1.9rem, 6.8vw, 3.9rem);
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 0 25px #ff5500, 0 0 50px #ffaa00;
+      margin-bottom: 15px;
+      line-height: 1.35;
+      animation: glitch-loading 2s infinite alternate;
+    }
+
+    @keyframes glitch-loading {
+      0% { text-shadow: 2px 0 #ff0000, -2px 0 #00ffff; }
+      20% { text-shadow: -2px 0 #ff0000, 2px 0 #00ffff; }
+      40% { text-shadow: 3px 0 #ffff00, -3px 0 #00ff00; }
+      100% { text-shadow: 0 0 40px #ffaa00; }
+    }
+
+    .loading-subtitle {
+      color: #ffcc77;
+      font-size: 1.28rem;
+      letter-spacing: 3px;
+      margin-bottom: 50px;
+      opacity: 0.95;
+    }
+
+    .progress-container {
+      width: 340px;
+      max-width: 85vw;
+      height: 14px;
+      background: rgba(255,170,0,0.15);
+      border: 3px solid #ffaa00;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255, 170, 0, 0.7);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ffaa00, #ff7700, #ffaa00);
+      transition: width 0.45s linear;
+      box-shadow: 0 0 20px #ff8800;
+    }
+
+    .loading-text {
+      margin-top: 18px;
+      color: #ffdd99;
+      font-size: 1.15rem;
+      letter-spacing: 3px;
+    }
+
+    /* ================== KONTEN UTAMA ================== */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+    }
+
+    .container.loaded {
+      opacity: 1;
+    }
+
+    header { padding: 30px 0 20px; }
+
+    .profile-card {
+      position: relative;
+      width: 240px;
+      height: 300px;
+      margin: 0 auto 45px;
+      background: rgba(40, 20, 10, 0.75);
+      border: 4px solid #ffaa00;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(255, 170, 0, 0.5);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
+    }
+
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(1.1) contrast(1.15);
+    }
+
+    .glitch {
+      color: #ffffff;
+      font-size: clamp(2.3rem, 7.5vw, 4.6rem);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      text-shadow: 0 0 20px #ffaa00, 0 0 40px #ff5500;
+      margin: 15px 0 12px;
+    }
+
+    .subtitle {
+      color: #ffcc33;
+      font-size: clamp(1.35rem, 4.8vw, 2.1rem);
+      font-weight: bold;
+      letter-spacing: 6px;
+      margin-bottom: 45px;
+      text-shadow: 0 0 15px #ff8800;
+    }
+
+    .form-box {
+      background: rgba(20, 15, 10, 0.92);
+      padding: 55px 40px;
+      border: 3px solid #ffaa00;
+      box-shadow: 0 0 50px rgba(255, 170, 0, 0.45);
+      display: inline-block;
+      width: 100%;
+      max-width: 720px;
+      border-radius: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .welcome-title {
+      color: #ffdd77;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: bold;
+      letter-spacing: 4px;
+      line-height: 1.3;
+      margin: 25px 0 50px;
+      text-shadow: 0 0 25px #ffaa00;
+    }
+
+    .platform-card {
+      background: rgba(35, 25, 15, 0.8);
+      border: 2px solid #ffaa0066;
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin: 0 auto 32px;
+      max-width: 480px;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .platform-card:hover {
+      transform: translateY(-8px);
+      border-color: #ffaa00;
+      box-shadow: 0 0 45px rgba(255, 170, 0, 0.5);
+    }
+
+    .platform-title {
+      color: #ffcc44;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 25px;
+    }
+
+    .btn-platform {
+      width: 100%;
+      padding: 17px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s;
+      margin-bottom: 12px;
+    }
+
+    .btn-platform:hover {
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+
+    .status-label {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      background: #ff3300aa;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================== LOADING SCREEN ================== -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-title">
+        SELAMAT DATANG DI WEBSITE<br>
+        TEAM THE BIG OFFROAD LEAGUE
+      </div>
+      <div class="loading-subtitle">BY MARCEL INDONESIA</div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progress"></div>
+      </div>
+      
+      <div class="loading-text" id="loading-text">MEMUAT KENDARAAN OFFROAD...</div>
+    </div>
+  </div>
+
+  <!-- ================== KONTEN UTAMA ================== -->
+  <div class="container" id="main-content">
+    <header>
+      <div class="status-group">
+        <span class="status-badge status-online" style="background:rgba(255,170,0,0.15); color:#ffcc00; border-color:#ffaa00;">[OFFROAD LEAGUE]</span>
+        <span class="status-badge status-aman" style="background:rgba(255,80,0,0.15); color:#ff7733; border-color:#ff5500;">[INDONESIA]</span>
+      </div>
+
+      <h1 class="glitch" data-text="THE BIG OFFROAD LEAGUE">
+        THE BIG OFFROAD LEAGUE
+      </h1>
+      <div class="subtitle">BY MARCEL INDONESIA</div>
+    </header>
+
+    <div class="profile-card">
+      <img 
+        src="https://media.craiyon.com/2025-08-25/B_IkxjUoRCGtmx_j_YW4cw.webp" 
+        alt="Profile" 
+        class="profile-img"
+      >
+    </div>
+
+    <div class="form-box">
+      <h2 style="color: #ffdd88; letter-spacing: 8px; margin-bottom: 18px;">★ SELAMAT DATANG ★</h2>
+      
+      <div class="welcome-title">
+        DI WEBSITE RESMI<br>
+        THE BIG OFFROAD LEAGUE<br>
+        TEAM MARCEL
+      </div>
+
+      <p style="margin: 35px 0 60px; font-size: 1.22rem; line-height: 1.75; opacity: 0.92;">
+        ★HALLO. SAYA AKAN MENGUNDANG KALIAN UNTUK BERGABUNG DI TEAM SAYA DAN NAMA TEAM SAYA ADALAH THE BIG OFFROAD LEAGUE DAN ITU TEAM SAYA DARI RILIS NYA GAME OFFROAD LEAGUE DAN SAYA UCAPKAN SELAMAT DATANG DI TEAM OFFROAD LEAGUE DAN JANGAN LUPA SHARE TERIMAKASI★
+      </p>
+
+      <!-- WHATSAPP -->
+      <div class="platform-card">
+        <div class="platform-title">WHATSAPP GROUP TEAM THE BIG OFFROAD LEAGUE</div>
+        <a href="https://chat.whatsapp.com/FKiThmteT25LMJ4IrVOzU4?mode=gi_t" target="_blank" style="text-decoration: none;">
+          <button class="btn-platform" style="background: #25D366; color: #000;">
+            JOIN WHATSAPP GROUP
+          </button>
+        </a>
+      </div>
+
+      <!-- DISCORD TEAM -->
+      <div class="platform-card">
+        <div class="platform-title">DISCORD COMMUNITY TEAM THE BIG OFFROAD LEAGUE</div>
+        <a href="https://discord.gg/js9QhA9Zs" target="_blank" style="text-decoration: none;">
+          <button class="btn-platform" style="background: #5865F2; color: white;">
+            JOIN DISCORD TEAM
+          </button>
+        </a>
+      </div>
+
+      <!-- DISCORD DEVELOPMENT -->
+      <div class="platform-card">
+        <div class="platform-title">COMMUNITY DISCORD RESMI OFFROAD LEAGUE DEVELOPMENT</div>
+        <a href="https://discord.gg/C3Zevvvjf" target="_blank" style="text-decoration: none;">
+          <button class="btn-platform" style="background: #5865F2; color: white;">
+            JOIN DISCORD DEVELOPMENT
+          </button>
+        </a>
+      </div>
+
+      <!-- TELEGRAM -->
+      <div class="platform-card">
+        <div class="platform-title">TELEGRAM GROUP TEAM THE BIG OFFROAD LEAGUE</div>
+        <button class="btn-platform" style="background: #0088cc; color: white; opacity: 0.7; filter: grayscale(30%); cursor: not-allowed;">
+          JOIN TELEGRAM GROUP
+        </button>
+        <span class="status-label">SOON</span>
+      </div>
+
+      <!-- DOWNLOAD -->
+      <div class="download-section" style="margin-top: 40px; padding: 28px; background: rgba(40, 25, 10, 0.85); border: 3px solid #ffaa00; border-radius: 16px;">
+        <div class="download-title" style="color:#ffcc44; font-size:1.4rem; font-weight:bold; margin-bottom:20px; letter-spacing:3px;">
+          DOWNLOAD GAME OFFROAD LEAGUE
+        </div>
+        
+        <a href="https://play.google.com/store/apps/details?id=com.RoosterGames.OffroadLeague" target="_blank" style="text-decoration: none;">
+          <button class="btn-platform" style="background: #4CAF50; color: white;">
+            [DOWNLOAD DI ANDROID] - PLAY STORE
+          </button>
+        </a>
+      </div>
+
+      <div class="update-notice">
+        <p style="font-size: 1.08rem; line-height: 1.7; color: #ffdd99; margin-top: 40px;">
+          ★WEBSITE INI AMAN UNTUK DI GUNAKAN ANDA JANGAN TAKUT UNTUK MENCLICK NYA INI WEBSITE DARI MARCEL DAN DARI CREATOR GROUP TEAM THE BIG OFFROAD LEAGUE DAN SILAKAN TEKAN TOMBOL DI ATAS TERIMAKASI ATAS MENGERTIAN NYA★
+        </p>
+      </div>
+
+      <p style="margin-top: 60px; font-size: 0.98rem; opacity: 0.75; letter-spacing: 2px;">
+        ★TEAM THE BIG OFFROAD LEAGUE BY MARCEL 2026★
+      </p>
+    </div>
+
+    <footer style="margin-top: 80px; opacity: 0.6; font-size: 0.95rem;">
+      THE BIG OFFROAD LEAGUE © MARCEL INDONESIA 2026
+    </footer>
+  </div>
+
+  <script>
+    // Loading Screen - Pelan
+    window.addEventListener('load', () => {
+      const loadingScreen = document.getElementById('loading-screen');
+      const mainContent = document.getElementById('main-content');
+      const progressBar = document.getElementById('progress');
+      const loadingText = document.getElementById('loading-text');
+
+      let progress = 0;
+
+      const fakeLoading = setInterval(() => {
+        progress += Math.random() * 3 + 1.2;
+
+        if (progress > 100) progress = 100;
+
+        progressBar.style.width = progress + '%';
+
+        if (progress < 35) loadingText.textContent = "MEMUAT KENDARAAN OFFROAD...";
+        else if (progress < 60) loadingText.textContent = "MENYIAPKAN TRACK BALAP...";
+        else if (progress < 82) loadingText.textContent = "MENYAMBUNGKAN KE SERVER TEAM...";
+        else if (progress < 97) loadingText.textContent = "HAMPIR SELESAI...";
+        else loadingText.textContent = "SELAMAT DATANG!";
+
+        if (progress >= 100) {
+          clearInterval(fakeLoading);
+          setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+              mainContent.classList.add('loaded');
+            }, 1600);
+          }, 700);
+        }
+      }, 170);
+    });
+
+    // Glitch effect
+    const glitchText = document.querySelector('.glitch');
+    setInterval(() => {
+      glitchText.style.opacity = 0.87;
+      setTimeout(() => { glitchText.style.opacity = 1; }, 95);
+    }, 4800);
+  </script>
+
+</body>
+</html>
