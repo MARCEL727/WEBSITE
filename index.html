@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcel | Profil Pribadi</title>
+    <meta name="description" content="Profil pribadi Marcel - Palembang">
+    
+    <!-- SEO Dasar -->
+    <meta name="author" content="Marcel">
+    <meta name="keywords" content="Marcel, Profil Marcel, Palembang">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(to right, #1a1a1a, #0f0f0f);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid #ffffff;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #aaaaaa;
+            margin-bottom: 30px;
+        }
+
+        nav {
+            background-color: #111;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: #ffffff;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #bbbbbb;
+            max-width: 800px;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        footer {
+            background-color: #0a0a0a;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+            color: #666;
+        }
+
+        .social-links a {
+            color: #888;
+            font-size: 1.8rem;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="foto-profil.jpg" alt="Marcel" class="profile-pic">
+        <h1>MARCEL</h1>
+        <p class="subtitle">Palembang, South Sumatra</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">Tentang Saya</a></li>
+            <li><a href="#gallery">Galeri Foto</a></li>
+            <li><a href="#contact">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- About Section -->
+        <section id="about">
+            <h2>Tentang Saya</h2>
+            <p class="about-text">
+                Halo, saya Marcel. Seseorang yang tinggal di Palembang, Sumatera Selatan.<br><br>
+                Saya suka belajar hal baru, terutama tentang teknologi dan coding. 
+                Website ini dibuat sederhana dengan tema hitam sesuai kepribadian saya yang minimalis dan clean.
+            </p>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery">
+            <h2>Galeri Foto</h2>
+            <div class="photo-gallery">
+                <!-- Ganti nama file sesuai foto yang kamu punya -->
+                <div class="photo-item">
+                    <img src="album/foto1.jpg" alt="Foto 1">
+                </div>
+                <div class="photo-item">
+                    <img src="album/foto2.jpg" alt="Foto 2">
+                </div>
+                <div class="photo-item">
+                    <img src="album/foto3.jpg" alt="Foto 3">
+                </div>
+                <div class="photo-item">
+                    <img src="album/foto4.jpg" alt="Foto 4">
+                </div>
+                <div class="photo-item">
+                    <img src="album/foto5.jpg" alt="Foto 5">
+                </div>
+                <div class="photo-item">
+                    <img src="album/foto6.jpg" alt="Foto 6">
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:20px; color:#666; font-size:0.9rem;">
+                * Letakkan foto-foto kamu di folder <strong>album/</strong>
+            </p>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com" target="_blank">📷</a>
+            <a href="https://twitter.com" target="_blank">𝕏</a>
+            <a href="https://github.com" target="_blank">💻</a>
+        </div>
+        <p>&copy; 2026 Marcel. All Rights Reserved.</p>
+        <p>Made with ❤️ in Palembang</p>
+    </footer>
+
+</body>
+</html>
