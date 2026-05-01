@@ -3,461 +3,267 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>THE BIG OFFROAD LEAGUE INDONESIA - BY MARCEL</title>
-  <link rel="icon" href="IMG_20260401_051554.jpg">
-  
+  <title>Label - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      background: #000000 url('https://i.ibb.co/vxwgxSR6/IMG-20260501-015200.jpg') center/cover no-repeat fixed;
-      color: #ffeedd;
-      font-family: 'Courier New', Courier, monospace;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
+      font-family: 'Inter', system-ui, sans-serif;
     }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(rgba(0,0,0,0.75), rgba(40,15,0,0.80));
-      z-index: 0;
-      pointer-events: none;
+    .sidebar-link:hover {
+      background-color: #1e2937;
     }
-
-    /* ================== LOADING SCREEN ================== */
-    #loading-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100vh;
-      background: #000 url('https://i.ibb.co/4RybTbRq/your-loading-image.jpg') center/cover no-repeat fixed;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 1.8s ease;
-      opacity: 1;
+    .metric-card {
+      transition: transform 0.2s;
     }
-
-    #loading-screen::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(rgba(0,0,0,0.88), rgba(60,25,0,0.92));
-      z-index: 1;
-    }
-
-    .loading-content {
-      text-align: center;
-      z-index: 2;
-      position: relative;
-    }
-
-    .loading-title {
-      color: #ffaa00;
-      font-size: clamp(1.9rem, 6.8vw, 3.9rem);
-      font-weight: bold;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      text-shadow: 0 0 25px #ff5500, 0 0 50px #ffaa00;
-      margin-bottom: 15px;
-      line-height: 1.35;
-      animation: glitch-loading 2.2s infinite alternate;
-    }
-
-    @keyframes glitch-loading {
-      0% { text-shadow: 2px 0 #ff0000, -2px 0 #00ffff; }
-      20% { text-shadow: -2px 0 #ff0000, 2px 0 #00ffff; }
-      40% { text-shadow: 3px 0 #ffff00, -3px 0 #00ff00; }
-      100% { text-shadow: 0 0 40px #ffaa00; }
-    }
-
-    .loading-subtitle {
-      color: #ffcc77;
-      font-size: 1.28rem;
-      letter-spacing: 3px;
-      margin-bottom: 40px;
-      opacity: 0.95;
-    }
-
-    .progress-percentage {
-      color: #ffdd88;
-      font-size: 2.1rem;
-      font-weight: bold;
-      letter-spacing: 4px;
-      text-shadow: 0 0 20px #ffaa00;
-      margin-bottom: 8px;
-    }
-
-    .progress-container {
-      width: 340px;
-      max-width: 85vw;
-      height: 14px;
-      background: rgba(255,170,0,0.15);
-      border: 3px solid #ffaa00;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(255, 170, 0, 0.7);
-      margin-bottom: 12px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #ffaa00, #ff7700, #ffaa00);
-      transition: width 0.4s linear;
-      box-shadow: 0 0 20px #ff8800;
-    }
-
-    .loading-text {
-      margin-top: 18px;
-      color: #ffdd99;
-      font-size: 1.15rem;
-      letter-spacing: 3px;
-    }
-
-    /* ================== KONTEN UTAMA ================== */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 30px 20px;
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-
-    .container.loaded {
-      opacity: 1;
-    }
-
-    header { padding: 30px 0 20px; }
-
-    .glitch {
-      color: #ffffff;
-      font-size: clamp(2.3rem, 7.5vw, 4.6rem);
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 6px;
-      text-shadow: 0 0 20px #ffaa00, 0 0 40px #ff5500;
-      margin: 15px 0 8px;
-    }
-
-    .subtitle {
-      color: #ffcc33;
-      font-size: clamp(1.45rem, 5vw, 2.2rem);
-      font-weight: bold;
-      letter-spacing: 5px;
-      margin-bottom: 45px;
-      text-shadow: 0 0 15px #ff8800;
-    }
-
-    .profile-card {
-      position: relative;
-      width: 210px;
-      height: 270px;
-      margin: 0 auto 30px;
-      background: rgba(40, 20, 10, 0.75);
-      border: 4px solid #ffaa00;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 45px rgba(255, 170, 0, 0.5);
-      animation: float 7s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-15px); }
-    }
-
-    .profile-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(1.1) contrast(1.15);
-    }
-
-    .founder-info {
-      margin: 15px 0 40px;
-      color: #ffdd88;
-      font-size: 1.15rem;
-      line-height: 1.8;
-      text-shadow: 0 0 10px #ffaa00;
-    }
-
-    .form-box {
-      background: rgba(20, 15, 10, 0.92);
-      padding: 55px 40px;
-      border: 3px solid #ffaa00;
-      box-shadow: 0 0 50px rgba(255, 170, 0, 0.45);
-      display: inline-block;
-      width: 100%;
-      max-width: 720px;
-      border-radius: 18px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .welcome-title {
-      color: #ffdd77;
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: bold;
-      letter-spacing: 4px;
-      line-height: 1.3;
-      margin: 25px 0 50px;
-      text-shadow: 0 0 25px #ffaa00;
-    }
-
-    .platform-card {
-      background: rgba(35, 25, 15, 0.8);
-      border: 2px solid #ffaa0066;
-      border-radius: 14px;
-      padding: 28px 32px;
-      margin: 0 auto 32px;
-      max-width: 480px;
-      position: relative;
-      transition: all 0.4s ease;
-    }
-
-    .platform-card:hover {
-      transform: translateY(-8px);
-      border-color: #ffaa00;
-      box-shadow: 0 0 45px rgba(255, 170, 0, 0.5);
-    }
-
-    .platform-title {
-      color: #ffcc44;
-      font-size: 1.5rem;
-      font-weight: bold;
-      letter-spacing: 3px;
-      margin-bottom: 25px;
-    }
-
-    .btn-platform {
-      width: 100%;
-      padding: 17px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.15rem;
-      font-weight: bold;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.4s;
-      margin-bottom: 12px;
-    }
-
-    .btn-platform:hover {
-      transform: scale(1.03);
-      filter: brightness(1.1);
-    }
-
-    .status-label {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 7px 16px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      background: #ff3300aa;
-      color: white;
+    .metric-card:hover {
+      transform: translateY(-3px);
     }
   </style>
 </head>
-<body>
+<body class="bg-[#0f172a] text-slate-200">
 
-  <!-- ================== LOADING SCREEN ================== -->
-  <div id="loading-screen">
-    <div class="loading-content">
-      <div class="loading-title">
-        SELAMAT DATANG DI<br>
-        THE BIG OFFROAD LEAGUE
+<div class="flex h-screen">
+
+  <!-- Sidebar -->
+  <div class="w-64 bg-[#1e2937] border-r border-slate-700 flex flex-col">
+    <div class="p-6 border-b border-slate-700">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">L</div>
+        <span class="text-2xl font-bold tracking-tight">label.</span>
       </div>
-      <div class="loading-subtitle">TEAM MARCEL INDONESIA</div>
-      
-      <div class="progress-percentage" id="percentage">0%</div>
-      
-      <div class="progress-container">
-        <div class="progress-bar" id="progress"></div>
-      </div>
-      
-      <div class="loading-text" id="loading-text">MEMUAT KENDARAAN OFFROAD...</div>
-    </div>
-  </div>
-
-  <!-- ================== KONTEN UTAMA ================== -->
-  <div class="container" id="main-content">
-    <header>
-      <h1 class="glitch" data-text="THE BIG OFFROAD LEAGUE INDONESIA">
-        THE BIG OFFROAD LEAGUE INDONESIA
-      </h1>
-      <div class="subtitle">TEAM MARCEL</div>
-    </header>
-
-    <div class="profile-card">
-      <img 
-        src="https://media.craiyon.com/2025-08-25/B_IkxjUoRCGtmx_j_YW4cw.webp" 
-        alt="Profile Marcel" 
-        class="profile-img"
-      >
     </div>
 
-    <div class="founder-info">
-      <p>[FOUNDER: MARCEL]</p>
-      <p>[USERNAME GAME: BOTMARCEL]</p>
-    </div>
-
-    <div class="form-box">
-      <h2 style="color: #ffdd88; letter-spacing: 8px; margin-bottom: 18px;">★ SELAMAT DATANG ★</h2>
-      
-      <div class="welcome-title">
-        DI WEBSITE RESMI<br>
-        THE BIG OFFROAD LEAGUE INDONESIA<br>
-        TEAM MARCEL
-      </div>
-
-      <p style="margin: 35px 0 60px; font-size: 1.22rem; line-height: 1.75; opacity: 0.92;">
-        ★HALLO. SAYA AKAN MENGUNDANG KALIAN UNTUK BERGABUNG DI TEAM SAYA DAN NAMA TEAM SAYA ADALAH THE BIG OFFROAD LEAGUE DAN ITU TEAM SAYA DARI RILIS NYA GAME OFFROAD LEAGUE DAN SAYA UCAPKAN SELAMAT DATANG DI TEAM OFFROAD LEAGUE DAN JANGAN LUPA SHARE TERIMAKASI★
-      </p>
-
-      <!-- WHATSAPP -->
-      <div class="platform-card">
-        <div class="platform-title">WHATSAPP GROUP TEAM THE BIG OFFROAD LEAGUE</div>
-        <a href="https://chat.whatsapp.com/FKiThmteT25LMJ4IrVOzU4?mode=gi_t" target="_blank" style="text-decoration: none;">
-          <button class="btn-platform" style="background: #25D366; color: #000;">
-            JOIN WHATSAPP GROUP
-          </button>
-        </a>
-      </div>
-
-      <!-- DISCORD TEAM -->
-      <div class="platform-card">
-        <div class="platform-title">DISCORD COMMUNITY TEAM THE BIG OFFROAD LEAGUE</div>
-        <a href="https://discord.gg/z9RfASNVx" target="_blank" style="text-decoration: none;">
-          <button class="btn-platform" style="background: #5865F2; color: white;">
-            JOIN DISCORD TEAM
-          </button>
-        </a>
-      </div>
-
-      <!-- DISCORD DEVELOPMENT -->
-      <div class="platform-card">
-        <div class="platform-title">COMMUNITY DISCORD RESMI OFFROAD LEAGUE DEVELOPMENT</div>
-        <a href="https://discord.gg/FtTVxrRSE" target="_blank" style="text-decoration: none;">
-          <button class="btn-platform" style="background: #5865F2; color: white;">
-            JOIN DISCORD DEVELOPMENT
-          </button>
-        </a>
-      </div>
-
-      <!-- TELEGRAM -->
-      <div class="platform-card">
-        <div class="platform-title">TELEGRAM GROUP TEAM THE BIG OFFROAD LEAGUE</div>
-        <button class="btn-platform" style="background: #0088cc; color: white; opacity: 0.7; filter: grayscale(30%); cursor: not-allowed;">
-          JOIN TELEGRAM GROUP
-        </button>
-        <span class="status-label">CLOSE</span>
-      </div>
-
-      <!-- DOWNLOAD -->
-      <div class="download-section" style="margin-top: 40px; padding: 28px; background: rgba(40, 25, 10, 0.85); border: 3px solid #ffaa00; border-radius: 16px;">
-        <div class="download-title" style="color:#ffcc44; font-size:1.4rem; font-weight:bold; margin-bottom:20px; letter-spacing:3px;">
-          DOWNLOAD GAME OFFROAD LEAGUE
+    <!-- User Info -->
+    <div class="p-6 border-b border-slate-700">
+      <div class="flex items-center gap-3">
+        <img src="https://i.pravatar.cc/150?u=allen" alt="Allen Clerk" class="w-12 h-12 rounded-2xl object-cover"/>
+        <div>
+          <p class="font-semibold">Allen Clerk</p>
+          <p class="text-xs text-slate-400">$3,400.00</p>
         </div>
-        
-        <a href="https://play.google.com/store/apps/details?id=com.RoosterGames.OffroadLeague" target="_blank" style="text-decoration: none;">
-          <button class="btn-platform" style="background: #4CAF50; color: white;">
-            [DOWNLOAD DI ANDROID] - PLAY STORE
-          </button>
-        </a>
       </div>
-
-      <div class="update-notice">
-        <p style="font-size: 1.08rem; line-height: 1.7; color: #ffdd99; margin-top: 40px;">
-          ★WEBSITE INI AMAN UNTUK DI GUNAKAN ANDA JANGAN TAKUT UNTUK MENCLICK NYA INI WEBSITE DARI MARCEL DAN DARI CREATOR GROUP TEAM THE BIG OFFROAD LEAGUE DAN SILAKAN TEKAN TOMBOL DI ATAS TERIMAKASI ATAS MENGERTIAN NYA★
-        </p>
-      </div>
-
-      <p style="margin-top: 60px; font-size: 0.98rem; opacity: 0.75; letter-spacing: 2px;">
-        ★TEAM THE BIG OFFROAD LEAGUE INDONESIA © MARCEL 2026★
-      </p>
     </div>
 
-    <footer style="margin-top: 80px; opacity: 0.6; font-size: 0.95rem;">
-      THE BIG OFFROAD LEAGUE INDONESIA © MARCEL 2026
-    </footer>
+    <!-- Menu -->
+    <div class="flex-1 overflow-y-auto py-4">
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-blue-400 bg-slate-800 mx-3 rounded-xl">
+        <i class="fa-solid fa-gauge"></i>
+        <span class="font-medium">Dashboard</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Sample Pages</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-palette"></i>
+        <span>UI Elements</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-table"></i>
+        <span>Advanced Tables</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>Charts</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-icons"></i>
+        <span>Icons</span>
+      </a>
+
+      <div class="px-6 mt-8 mb-2 text-xs font-medium text-slate-500">APPS</div>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Email</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span>Kanban Board</span>
+      </a>
+      <a href="#" class="sidebar-link flex items-center gap-3 px-6 py-3 text-slate-300 mx-3 rounded-xl">
+        <i class="fa-solid fa-calendar"></i>
+        <span>Calendar</span>
+      </a>
+    </div>
   </div>
 
-  <script>
-    // ================== LOADING SCREEN SETIAP KALI MASUK ==================
-    function startLoading() {
-      const loadingScreen = document.getElementById('loading-screen');
-      const mainContent = document.getElementById('main-content');
-      const progressBar = document.getElementById('progress');
-      const percentageText = document.getElementById('percentage');
-      const loadingText = document.getElementById('loading-text');
+  <!-- Main Content -->
+  <div class="flex-1 overflow-y-auto">
+    <!-- Top Navbar -->
+    <div class="bg-[#1e2937] border-b border-slate-700 px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <h1 class="text-2xl font-semibold">Dashboard</h1>
+        <p class="text-slate-400 text-sm">Welcome aboard, Allen Clerk</p>
+      </div>
 
-      let progress = 0;
-      loadingScreen.style.opacity = '1';
-      loadingScreen.style.display = 'flex';
-      mainContent.style.opacity = '0';
+      <div class="flex items-center gap-6">
+        <div class="relative">
+          <input type="text" placeholder="Search..." 
+                 class="bg-slate-800 border border-slate-600 rounded-2xl py-2 px-5 pl-10 w-80 focus:outline-none focus:border-blue-500"/>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3 text-slate-400"></i>
+        </div>
+        <button class="w-9 h-9 bg-slate-800 hover:bg-slate-700 rounded-2xl flex items-center justify-center">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <div class="w-9 h-9 bg-purple-600 rounded-2xl"></div>
+      </div>
+    </div>
 
-      const fakeLoading = setInterval(() => {
-        progress += Math.random() * 4 + 2.5;   // percepat sedikit
+    <!-- Metrics -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 p-8">
+      <div class="metric-card bg-[#1e2937] rounded-3xl p-6 border border-slate-700">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-slate-400 text-sm">Traffic</p>
+            <p class="text-3xl font-bold mt-2">30%</p>
+          </div>
+          <div class="text-emerald-400 text-xl font-semibold">+05.2%</div>
+        </div>
+        <div class="h-12 mt-4">
+          <div class="w-full h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl opacity-20"></div>
+        </div>
+      </div>
 
-        if (progress > 100) progress = 100;
+      <div class="metric-card bg-[#1e2937] rounded-3xl p-6 border border-slate-700">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-slate-400 text-sm">Conversion</p>
+            <p class="text-3xl font-bold mt-2">43%</p>
+          </div>
+          <div class="text-emerald-400 text-xl font-semibold">+15.7%</div>
+        </div>
+        <div class="h-12 mt-4">
+          <div class="w-full h-full bg-gradient-to-r from-cyan-400 to-teal-400 rounded-2xl opacity-20"></div>
+        </div>
+      </div>
 
-        progressBar.style.width = progress + '%';
-        percentageText.textContent = Math.floor(progress) + '%';
+      <div class="metric-card bg-[#1e2937] rounded-3xl p-6 border border-slate-700">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-slate-400 text-sm">Bounce Rate</p>
+            <p class="text-3xl font-bold mt-2">23%</p>
+          </div>
+          <div class="text-emerald-400 text-xl font-semibold">+02.7%</div>
+        </div>
+        <div class="h-12 mt-4">
+          <div class="w-full h-full bg-gradient-to-r from-purple-500 to-pink-400 rounded-2xl opacity-20"></div>
+        </div>
+      </div>
 
-        // Ubah teks loading
-        if (progress < 30) loadingText.textContent = "MEMUAT KENDARAAN OFFROAD...";
-        else if (progress < 55) loadingText.textContent = "MENYIAPKAN TRACK BALAP...";
-        else if (progress < 75) loadingText.textContent = "MENYAMBUNGKAN KE SERVER TEAM...";
-        else if (progress < 92) loadingText.textContent = "FINAL CHECKING...";
-        else loadingText.textContent = "SELAMAT DATANG DI TEAM MARCEL!";
+      <div class="metric-card bg-[#1e2937] rounded-3xl p-6 border border-slate-700">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-slate-400 text-sm">Marketing</p>
+            <p class="text-3xl font-bold mt-2">75%</p>
+          </div>
+          <div class="text-red-400 text-xl font-semibold">-53.34%</div>
+        </div>
+        <div class="h-12 mt-4">
+          <div class="w-full h-full bg-gradient-to-r from-pink-500 to-rose-400 rounded-2xl opacity-20"></div>
+        </div>
+      </div>
+    </div>
 
-        if (progress >= 100) {
-          clearInterval(fakeLoading);
-          
-          setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            
-            setTimeout(() => {
-              loadingScreen.style.display = 'none';
-              mainContent.classList.add('loaded');
-              mainContent.style.opacity = '1';
-            }, 1800);
-          }, 600);
-        }
-      }, 120); // lebih cepat dari sebelumnya
-    }
+    <!-- Main Dashboard Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 px-8 pb-8">
+      
+      <!-- Followers Growth -->
+      <div class="lg:col-span-2 bg-[#1e2937] rounded-3xl p-6 border border-slate-700">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h3 class="text-lg font-semibold">Followers Growth</h3>
+            <p class="text-4xl font-bold text-blue-400">16.2K <span class="text-sm text-slate-400 font-normal">New Followers</span></p>
+          </div>
+          <div class="text-xs text-slate-400">80 K Total</div>
+        </div>
+        <div class="h-80 bg-slate-800 rounded-2xl flex items-end justify-around px-6">
+          <!-- Simple Bar Chart -->
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[40%]"></div>
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[55%]"></div>
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[35%]"></div>
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[60%]"></div>
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[45%]"></div>
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[70%]"></div>
+          <div class="bg-blue-500 w-10 rounded-t-lg h-[85%]"></div>
+        </div>
+      </div>
 
-    // Jalankan loading setiap kali halaman dimuat
-    window.addEventListener('load', startLoading);
+      <!-- Campaign Progress -->
+      <div class="bg-[#1e2937] rounded-3xl p-6 border border-slate-700 flex flex-col">
+        <h3 class="text-lg font-semibold mb-2">Campaign</h3>
+        <div class="flex-1 flex items-center justify-center">
+          <div class="relative w-48 h-48">
+            <svg class="w-full h-full" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="#334155" stroke-width="14"/>
+              <circle cx="60" cy="60" r="52" fill="none" stroke="#22d3ee" stroke-width="14" 
+                      stroke-dasharray="326.73" stroke-dashoffset="114" stroke-linecap="round"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <p class="text-5xl font-bold">67%</p>
+              <p class="text-slate-400 text-sm">Progress</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <p class="text-3xl font-bold">$23,350.00</p>
+          <p class="text-slate-400 text-sm">Used balance this billing cycle</p>
+        </div>
+      </div>
 
-    // Optional: Jika ingin loading juga muncul saat navigasi kembali (browser back)
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted) {
-        startLoading();
-      }
-    });
+      <!-- Stock Market -->
+      <div class="lg:col-span-3 bg-[#1e2937] rounded-3xl p-6 border border-slate-700">
+        <h3 class="text-lg font-semibold mb-4">Market Overview</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-full">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-sm text-slate-400">
+                <th class="py-4 px-4">Symbol</th>
+                <th class="py-4 px-4">Price</th>
+                <th class="py-4 px-4">Change</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <tr class="border-b border-slate-700">
+                <td class="py-4 px-4 font-medium">AAPL</td>
+                <td class="py-4 px-4">198.18</td>
+                <td class="py-4 px-4 text-emerald-400">+3.84%</td>
+              </tr>
+              <tr class="border-b border-slate-700">
+                <td class="py-4 px-4 font-medium">NIKE</td>
+                <td class="py-4 px-4">63.95</td>
+                <td class="py-4 px-4 text-red-400">-0.17%</td>
+              </tr>
+              <tr class="border-b border-slate-700">
+                <td class="py-4 px-4 font-medium">NSEI</td>
+                <td class="py-4 px-4">11,278</td>
+                <td class="py-4 px-4 text-emerald-400">+2.64%</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-4 font-medium">BA</td>
+                <td class="py-4 px-4">354.67</td>
+                <td class="py-4 px-4 text-emerald-400">+10.05%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    // Glitch effect untuk judul utama
-    const glitchText = document.querySelector('.glitch');
-    setInterval(() => {
-      if (glitchText) {
-        glitchText.style.opacity = 0.85;
-        setTimeout(() => { glitchText.style.opacity = 1; }, 110);
-      }
-    }, 5200);
-  </script>
+<!-- Bottom Logo Banner (seperti di gambar) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-8 py-3 flex items-center gap-8 text-white">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" class="h-8" alt="React"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png" class="h-8" alt="Vue"/>
+  <img src="https://static.djangoproject.com/img/logos/django-logo-negative.svg" class="h-8" alt="Django"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Flask_logo.svg/1200px-Flask_logo.svg.png" class="h-8" alt="Flask"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png" class="h-8" alt="Next.js"/>
+</div>
+
+<script>
+  // Tailwind script sudah di-load
+</script>
 
 </body>
 </html>
