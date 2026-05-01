@@ -16,7 +16,6 @@
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
-      transition: all 0.5s ease;
     }
 
     body::before {
@@ -103,11 +102,6 @@
       cursor: not-allowed;
     }
 
-    .menu-item.disabled:hover {
-      background: none;
-      padding-left: 20px;
-    }
-
     .overlay {
       position: fixed;
       top: 0; left: 0;
@@ -123,6 +117,36 @@
     .overlay.active {
       opacity: 1;
       visibility: visible;
+    }
+
+    /* ================== FPS COUNTER ================== */
+    .top-bar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 2px solid #ffaa00;
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 9999;
+      font-size: 1.1rem;
+      box-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
+    }
+
+    .fps {
+      color: #00ff88;
+      font-weight: bold;
+      letter-spacing: 2px;
+      min-width: 70px;
+    }
+
+    .website-by {
+      color: #ffcc77;
+      font-size: 1rem;
+      letter-spacing: 2px;
     }
 
     /* ================== LOADING SCREEN ================== */
@@ -176,11 +200,11 @@
       margin-bottom: 50px;
     }
 
-    /* ================== KONTEN UTAMA (BERANDA) ================== */
+    /* ================== KONTEN UTAMA ================== */
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 110px 20px 80px;
+      padding: 120px 20px 80px;
       position: relative;
       z-index: 2;
       text-align: center;
@@ -209,60 +233,23 @@
       object-fit: cover;
     }
 
-    .profile-name {
-      color: #ffdd88;
-      font-size: 2.4rem;
-      font-weight: bold;
-      letter-spacing: 5px;
-      text-shadow: 0 0 20px #ffaa00;
-      margin-bottom: 10px;
-    }
-
     .profile-info {
-      color: #ffcc77;
-      font-size: 1.3rem;
-      line-height: 1.6;
-    }
-
-    /* ================== SETTING PAGE (Diperbaiki) ================== */
-    #setting-page {
-      display: none;
-      max-width: 720px;
-      margin: 90px auto 50px;
-      padding: 50px 40px;
-      background: rgba(18, 13, 8, 0.96);
-      border: 4px solid #ffaa00;
-      border-radius: 20px;
-      box-shadow: 0 0 60px rgba(255, 170, 0, 0.5);
-      position: relative;
-      z-index: 5;
-    }
-
-    .setting-title {
-      color: #ffcc44;
-      font-size: 2.4rem;
-      text-align: center;
-      margin-bottom: 50px;
-      letter-spacing: 6px;
-      text-shadow: 0 0 20px #ff8800;
-    }
-
-    .setting-notice {
       color: #ffdd99;
       font-size: 1.35rem;
       line-height: 1.8;
-      text-align: center;
-      padding: 30px 20px;
-      background: rgba(40,25,15,0.6);
-      border: 2px dashed #ffaa00;
-      border-radius: 12px;
+      letter-spacing: 1px;
+    }
+
+    .info-line {
+      margin: 12px 0;
+      text-shadow: 0 0 10px #ffaa00;
     }
 
     footer {
-      margin-top: 80px;
-      padding: 25px;
+      margin-top: 90px;
+      padding: 20px;
       opacity: 0.7;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       text-align: center;
     }
   </style>
@@ -271,6 +258,12 @@
 
   <!-- ================== HAMBURGER MENU ================== -->
   <div class="hamburger" id="hamburger">≡</div>
+
+  <!-- Top Bar: FPS + Website By -->
+  <div class="top-bar">
+    <div class="fps">FPS: <span id="fps-counter">68</span></div>
+    <div class="website-by">WEBSITE BY MARCEL</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
@@ -307,33 +300,27 @@
       >
     </div>
 
-    <div class="profile-name">MARCEL</div>
     <div class="profile-info">
-      FOUNDER • THE BIG OFFROAD LEAGUE INDONESIA<br>
-      USERNAME: BOTMARCEL
+      <div class="info-line">DEV-WEB: MARCEL</div>
+      <div class="info-line">USERNAME-GAME: BOTMARCEL</div>
     </div>
 
     <footer>
-      ★ TEAM THE BIG OFFROAD LEAGUE INDONESIA © MARCEL 2026 ★
+      ★ THE BIG OFFROAD LEAGUE INDONESIA © MARCEL 2026 ★
     </footer>
   </div>
 
-  <!-- ================== SETTING PAGE (Baru & Lebih Jelas) ================== -->
-  <div id="setting-page">
-    <div class="setting-title">⚙️ SETTING WEBSITE</div>
-    
-    <div class="setting-notice">
+  <!-- ================== SETTING PAGE ================== -->
+  <div id="setting-page" style="display: none; max-width: 720px; margin: 90px auto 50px; padding: 50px 40px; background: rgba(18,13,8,0.96); border: 4px solid #ffaa00; border-radius: 20px; box-shadow: 0 0 60px rgba(255,170,0,0.5); text-align: center;">
+    <h2 style="color: #ffcc44; font-size: 2.4rem; margin-bottom: 40px; letter-spacing: 6px;">⚙️ SETTING WEBSITE</h2>
+    <div style="color: #ffdd99; font-size: 1.35rem; line-height: 1.8;">
       Halaman Setting sedang dalam pengembangan.<br><br>
-      Fitur akan ditambahkan segera.<br>
-      Terima kasih telah bergabung di Team Marcel!
+      Fitur akan segera ditambahkan.
     </div>
-
-    <div style="text-align: center; margin-top: 50px;">
-      <button onclick="backToHome()" 
-              style="padding: 16px 50px; font-size: 1.2rem; background: #ff5500; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; letter-spacing: 2px;">
-        KEMBALI KE BERANDA
-      </button>
-    </div>
+    <button onclick="backToHome()" 
+            style="margin-top: 50px; padding: 16px 50px; font-size: 1.2rem; background: #ff5500; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold;">
+      KEMBALI KE BERANDA
+    </button>
   </div>
 
   <script>
@@ -367,7 +354,22 @@
       }, 100);
     }
 
-    // ================== MENU & NAVIGATION ==================
+    // ================== FPS COUNTER (Seperti Game) ==================
+    function startFPSCounter() {
+      const fpsElement = document.getElementById('fps-counter');
+      let fps = 68;
+
+      setInterval(() => {
+        // Simulasi fluktuasi FPS seperti di game
+        fps += Math.floor(Math.random() * 7) - 3; // naik turun antara -3 sampai +3
+        if (fps < 52) fps = 52;
+        if (fps > 78) fps = 78;
+
+        fpsElement.textContent = fps;
+      }, 280); // update setiap 280ms
+    }
+
+    // ================== MENU FUNCTION ==================
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
@@ -400,10 +402,16 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Jalankan loading saat halaman dibuka
-    window.addEventListener('load', startLoading);
+    // Jalankan semua fungsi saat halaman dimuat
+    window.addEventListener('load', () => {
+      startLoading();
+      startFPSCounter();
+    });
+
     window.addEventListener('pageshow', (event) => {
-      if (event.persisted) startLoading();
+      if (event.persisted) {
+        startLoading();
+      }
     });
   </script>
 
