@@ -16,6 +16,12 @@
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    body.light-mode {
+      background: #f5e8d3 url('https://i.ibb.co/vxwgxSR6/IMG-20260501-015200.jpg') center/cover no-repeat fixed;
+      color: #333;
     }
 
     body::before {
@@ -25,6 +31,10 @@
       background: linear-gradient(rgba(0,0,0,0.75), rgba(40,15,0,0.80));
       z-index: 0;
       pointer-events: none;
+    }
+
+    body.light-mode::before {
+      background: linear-gradient(rgba(255,255,255,0.75), rgba(245,232,211,0.85));
     }
 
     /* ================== MENU HAMBURGER ================== */
@@ -97,6 +107,16 @@
       padding-left: 30px;
     }
 
+    .menu-item.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .menu-item.disabled:hover {
+      background: none;
+      padding-left: 20px;
+    }
+
     .overlay {
       position: fixed;
       top: 0; left: 0;
@@ -165,41 +185,10 @@
       font-size: 1.45rem;
       letter-spacing: 6px;
       margin-bottom: 40px;
-      opacity: 0.95;
     }
 
-    .progress-percentage {
+    .progress-percentage, .loading-text {
       color: #ffdd88;
-      font-size: 2.1rem;
-      font-weight: bold;
-      letter-spacing: 4px;
-      text-shadow: 0 0 20px #ffaa00;
-      margin-bottom: 8px;
-    }
-
-    .progress-container {
-      width: 340px;
-      max-width: 85vw;
-      height: 14px;
-      background: rgba(255,170,0,0.15);
-      border: 3px solid #ffaa00;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(255, 170, 0, 0.7);
-      margin-bottom: 12px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #ffaa00, #ff7700, #ffaa00);
-      transition: width 0.4s linear;
-      box-shadow: 0 0 20px #ff8800;
-    }
-
-    .loading-text {
-      margin-top: 18px;
-      color: #ffdd99;
       font-size: 1.15rem;
       letter-spacing: 3px;
     }
@@ -239,17 +228,70 @@
 
     .profile-name {
       color: #ffdd88;
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: bold;
       letter-spacing: 4px;
       text-shadow: 0 0 15px #ffaa00;
-      margin-bottom: 10px;
     }
 
     .profile-info {
       color: #ffcc77;
       font-size: 1.25rem;
-      margin: 15px 0;
+      margin: 15px 0 40px;
+    }
+
+    /* ================== SETTING PAGE ================== */
+    #setting-page {
+      display: none;
+      max-width: 700px;
+      margin: 100px auto;
+      padding: 40px 30px;
+      background: rgba(20,15,10,0.95);
+      border: 3px solid #ffaa00;
+      border-radius: 16px;
+      text-align: left;
+    }
+
+    .setting-title {
+      color: #ffcc44;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 4px;
+    }
+
+    .setting-item {
+      margin-bottom: 30px;
+    }
+
+    .setting-label {
+      display: block;
+      color: #ffdd88;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .btn-setting {
+      padding: 12px 24px;
+      margin: 8px 6px 8px 0;
+      background: #ffaa00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-setting:hover {
+      background: #ff8800;
+      transform: scale(1.05);
+    }
+
+    .btn-setting.active {
+      background: #00ff88;
+      color: #000;
     }
 
     footer {
@@ -270,9 +312,9 @@
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">MENU TEAM MARCEL</div>
     <a href="#" onclick="goToHome()" class="menu-item">🏠 BERANDA</a>
-    <a href="#" class="menu-item">🛠 SUPPORT</a>
-    <a href="#" class="menu-item">⚙️ SETTING</a>
-    <a href="#" class="menu-item">👤 PROFIL</a>
+    <a href="#" class="menu-item disabled">🛠 SUPPORT <small>(Soon)</small></a>
+    <a href="#" onclick="showSetting()" class="menu-item">⚙️ SETTING</a>
+    <a href="#" class="menu-item disabled">👤 PROFIL <small>(Soon)</small></a>
   </div>
 
   <!-- Overlay -->
@@ -283,7 +325,6 @@
     <div class="loading-content">
       <div class="loading-title">TEAM MARCEL</div>
       <div class="loading-subtitle">THE BIG OFFROAD LEAGUE INDONESIA</div>
-      
       <div class="progress-percentage" id="percentage">0%</div>
       <div class="progress-container">
         <div class="progress-bar" id="progress"></div>
@@ -292,7 +333,7 @@
     </div>
   </div>
 
-  <!-- ================== KONTEN UTAMA (BERANDA) ================== -->
+  <!-- ================== BERANDA ================== -->
   <div class="container" id="main-content">
     <div class="profile-card">
       <img 
@@ -313,29 +354,45 @@
     </footer>
   </div>
 
+  <!-- ================== SETTING PAGE ================== -->
+  <div id="setting-page">
+    <div class="setting-title">⚙️ SETTING WEBSITE</div>
+
+    <div class="setting-item">
+      <div class="setting-label">MODE TAMPILAN</div>
+      <button class="btn-setting" onclick="setMode('dark')">MODE GELAP</button>
+      <button class="btn-setting" onclick="setMode('light')">MODE TERANG</button>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-label">PILIH BAHASA</div>
+      <button class="btn-setting active" onclick="changeLanguage('id')">BAHASA INDONESIA</button>
+      <button class="btn-setting" onclick="changeLanguage('en')">ENGLISH</button>
+    </div>
+
+    <div style="text-align:center; margin-top:50px;">
+      <button onclick="backToHome()" class="btn-setting" style="background:#ff5500; padding:14px 40px;">
+        KEMBALI KE BERANDA
+      </button>
+    </div>
+  </div>
+
   <script>
     // ================== LOADING SCREEN ==================
     function startLoading() {
       const loadingScreen = document.getElementById('loading-screen');
       const mainContent = document.getElementById('main-content');
+      let progress = 0;
       const progressBar = document.getElementById('progress');
       const percentageText = document.getElementById('percentage');
       const loadingText = document.getElementById('loading-text');
 
-      let progress = 0;
-
       const fakeLoading = setInterval(() => {
-        progress += Math.random() * 4 + 2.5;
+        progress += Math.random() * 4 + 3;
         if (progress > 100) progress = 100;
 
         progressBar.style.width = progress + '%';
         percentageText.textContent = Math.floor(progress) + '%';
-
-        if (progress < 30) loadingText.textContent = "MEMUAT KENDARAAN OFFROAD...";
-        else if (progress < 55) loadingText.textContent = "MENYIAPKAN TRACK BALAP...";
-        else if (progress < 75) loadingText.textContent = "MENYAMBUNGKAN KE SERVER...";
-        else if (progress < 92) loadingText.textContent = "FINAL CHECKING...";
-        else loadingText.textContent = "SELAMAT DATANG!";
 
         if (progress >= 100) {
           clearInterval(fakeLoading);
@@ -364,22 +421,44 @@
     hamburger.addEventListener('click', toggleMenu);
     overlay.addEventListener('click', toggleMenu);
 
-    // Fungsi Beranda (kembali ke atas / refresh halaman)
     function goToHome() {
-      toggleMenu();           // tutup menu
+      toggleMenu();
+      document.getElementById('setting-page').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Tutup menu saat klik item lain
-    document.querySelectorAll('.menu-item').forEach(item => {
-      if (!item.getAttribute('onclick')) {
-        item.addEventListener('click', () => {
-          toggleMenu();
-        });
-      }
-    });
+    function showSetting() {
+      toggleMenu();
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('setting-page').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-    // Jalankan loading saat halaman dimuat
+    function backToHome() {
+      document.getElementById('setting-page').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    }
+
+    // Mode Gelap / Terang
+    function setMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light-mode');
+      } else {
+        document.body.classList.remove('light-mode');
+      }
+    }
+
+    // Ganti Bahasa (Sementara hanya alert)
+    function changeLanguage(lang) {
+      if (lang === 'en') {
+        alert("🌍 English mode will be available soon!");
+      } else {
+        alert("✅ Bahasa Indonesia sudah aktif.");
+      }
+    }
+
+    // Jalankan loading
     window.addEventListener('load', startLoading);
     window.addEventListener('pageshow', (event) => {
       if (event.persisted) startLoading();
