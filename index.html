@@ -12,6 +12,7 @@
         .modal { animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .verified { color: #3b82f6; }
+        .preview-img { object-fit: cover; }
     </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen">
@@ -26,7 +27,9 @@
 
             <div onclick="toggleProfileMenu()" id="headerUser"
                  class="flex items-center gap-3 cursor-pointer hover:bg-gray-900 px-4 py-2 rounded-2xl">
-                <div id="headerAvatar" class="w-9 h-9 bg-gray-700 rounded-2xl flex items-center justify-center text-2xl cursor-pointer">👤</div>
+                <div id="headerAvatar" class="w-9 h-9 bg-gray-700 rounded-2xl overflow-hidden flex items-center justify-center text-2xl cursor-pointer">
+                    👤
+                </div>
                 <div>
                     <div class="flex items-center gap-1">
                         <p id="headerName" class="font-medium">PENGUNJUNG</p>
@@ -45,11 +48,14 @@
                 <a onclick="showPage('dashboard')" class="nav-item flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-gray-900 cursor-pointer">
                     <i class="fas fa-home"></i> <span>Dashboard</span>
                 </a>
-                <a onclick="showPage('chat')" class="nav-item flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-gray-900 cursor-pointer">
-                    <i class="fas fa-comment-dots"></i> <span>Chat</span>
+                <a onclick="showPage('profil')" class="nav-item flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-gray-900 cursor-pointer">
+                    <i class="fas fa-user"></i> <span>Profil</span>
                 </a>
                 <a onclick="showPage('setting')" class="nav-item flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-gray-900 cursor-pointer">
                     <i class="fas fa-cog"></i> <span>Settings</span>
+                </a>
+                <a onclick="showPage('chat')" class="nav-item flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-gray-900 cursor-pointer">
+                    <i class="fas fa-comment-dots"></i> <span>Chat</span>
                 </a>
                 <a onclick="showPage('devPanel')" id="devMenu" class="nav-item hidden flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-gray-900 cursor-pointer">
                     <i class="fas fa-shield-alt"></i> <span>DEV PANEL</span>
@@ -65,11 +71,11 @@
                 <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
                 <div class="bg-gray-900 rounded-3xl p-8">
                     <div class="flex items-center gap-6">
-                        <div id="dashAvatar" class="w-28 h-28 bg-gray-700 rounded-3xl text-7xl flex items-center justify-center">👤</div>
+                        <div id="dashAvatar" class="w-28 h-28 bg-gray-700 rounded-3xl overflow-hidden text-7xl flex items-center justify-center">👤</div>
                         <div>
                             <div class="flex items-center gap-2">
                                 <h2 id="dashName" class="text-3xl font-bold">PENGUNJUNG</h2>
-                                <span id="dashVerified" class="verified text-2xl hidden">✔</span>
+                                <span id="dashVerified" class="verified text-3xl hidden">✔</span>
                             </div>
                             <p id="dashId" class="text-gray-400">ID: -</p>
                         </div>
@@ -77,19 +83,20 @@
                 </div>
             </div>
 
-            <!-- SETTINGS / PROFIL -->
-            <div id="page-setting" class="page hidden">
-                <h1 class="text-3xl font-bold mb-6">Profil Akun</h1>
-                <div class="bg-gray-900 rounded-3xl p-8 max-w-lg">
-                    <div class="flex flex-col items-center gap-4 mb-8">
-                        <div onclick="changeProfilePic()" id="profileAvatar" 
-                             class="w-32 h-32 bg-gray-700 rounded-3xl text-8xl flex items-center justify-center cursor-pointer hover:ring-4 hover:ring-blue-500 transition">
+            <!-- PROFIL PAGE -->
+            <div id="page-profil" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Profil Saya</h1>
+                <div class="bg-gray-900 rounded-3xl p-8 max-w-lg mx-auto">
+                    <div class="flex flex-col items-center gap-6">
+                        <div onclick="triggerFileUpload()" id="profileAvatarBig" 
+                             class="w-40 h-40 bg-gray-700 rounded-3xl overflow-hidden cursor-pointer hover:ring-4 hover:ring-blue-500 transition-all">
                             👤
                         </div>
-                        <p class="text-sm text-gray-400">Klik untuk ganti foto profil</p>
+                        <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                        <p class="text-sm text-gray-400">Klik foto untuk ganti dari album</p>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="mt-8 space-y-4">
                         <div>
                             <label class="block text-sm mb-1">Nama</label>
                             <input id="profileName" readonly class="w-full bg-gray-800 px-5 py-4 rounded-2xl">
@@ -101,39 +108,46 @@
                     </div>
 
                     <div class="mt-10 flex gap-4">
-                        <button onclick="logout()" class="flex-1 bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-medium">Keluar dari Akun</button>
+                        <button onclick="logout()" class="flex-1 bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-medium">Keluar</button>
                         <button onclick="confirmDeleteAccount()" class="flex-1 bg-gray-700 hover:bg-red-900 py-4 rounded-2xl font-medium">Hapus Akun</button>
                     </div>
                 </div>
             </div>
 
+            <!-- SETTINGS PAGE -->
+            <div id="page-setting" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Pengaturan Website</h1>
+                <div class="bg-gray-900 rounded-3xl p-8 max-w-lg">
+                    <p class="text-gray-400">Pengaturan website akan ditambahkan di sini.</p>
+                </div>
+            </div>
+
             <!-- DEV PANEL -->
             <div id="page-devPanel" class="page hidden">
-                <h1 class="text-3xl font-bold mb-6 text-yellow-400 flex items-center gap-3">
-                    <i class="fas fa-shield-alt"></i> DEV PANEL
-                </h1>
-
-                <div class="space-y-8">
-                    <!-- Daftar Akun Players -->
-                    <div>
+                <h1 class="text-3xl font-bold mb-6 text-yellow-400">🔧 DEV PANEL</h1>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Kiri: Daftar Akun Players -->
+                    <div class="bg-gray-900 rounded-3xl p-6">
                         <h2 class="text-xl font-semibold mb-4">DAFTAR AKUN PLAYERS</h2>
-                        <div id="accountsList" class="space-y-3"></div>
+                        <div id="accountsList" class="space-y-4"></div>
                     </div>
 
-                    <!-- Daftar Akun Telah Dihapus -->
-                    <div>
+                    <!-- Kanan: Daftar Akun Telah Di Delete -->
+                    <div class="bg-gray-900 rounded-3xl p-6">
                         <h2 class="text-xl font-semibold mb-4 text-red-400">DAFTAR AKUN TELAH DI DELETE</h2>
-                        <div id="deletedList" class="space-y-3"></div>
+                        <div id="deletedList" class="space-y-4"></div>
                     </div>
                 </div>
             </div>
+
         </main>
     </div>
 
     <!-- AUTH MODAL -->
     <div id="authModal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-[100]">
         <div class="bg-gray-900 rounded-3xl w-full max-w-md mx-4 p-8 modal">
-            <h2 class="text-2xl font-bold mb-6 text-center" id="modalTitle">Login / Daftar</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login / Daftar</h2>
             
             <div class="flex border-b border-gray-700 mb-6">
                 <button onclick="switchTab(0)" id="tabLogin" class="flex-1 py-3 font-medium border-b-2 border-blue-500">Login</button>
@@ -151,7 +165,7 @@
                 <input id="regId" placeholder="ID Akun Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-4">
                 <input id="regEmail" placeholder="Email Fake Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-4">
                 <input id="regPass" type="password" placeholder="Password Fake Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-6">
-                <button onclick="register()" class="w-full bg-green-600 py-4 rounded-2xl font-medium">DAFTAR AKUN</button>
+                <button onclick="register()" class="w-full bg-green-600 py-4 rounded-2xl font-medium">DAFTAR</button>
             </div>
 
             <button onclick="closeModal()" class="mt-6 text-gray-400 hover:text-white w-full">Tutup</button>
@@ -173,31 +187,29 @@
 
         function updateHeader() {
             const avatar = document.getElementById('headerAvatar');
-            const nameEl = document.getElementById('headerName');
-            const idEl = document.getElementById('headerId');
-            const verified = document.getElementById('headerVerified');
-
-            if (currentUser) {
-                avatar.innerHTML = currentUser.avatar || '👤';
-                nameEl.textContent = currentUser.name;
-                idEl.textContent = `ID: ${currentUser.id}`;
-                verified.classList.toggle('hidden', currentUser.name !== "BOTMARCEL");
+            if (currentUser && currentUser.avatarUrl) {
+                avatar.innerHTML = `<img src="${currentUser.avatarUrl}" class="w-full h-full object-cover preview-img">`;
             } else {
-                avatar.innerHTML = '👤';
-                nameEl.textContent = "PENGUNJUNG";
-                idEl.textContent = "ID: -";
-                verified.classList.add('hidden');
+                avatar.innerHTML = currentUser?.avatar || '👤';
             }
+            document.getElementById('headerName').textContent = currentUser ? currentUser.name : "PENGUNJUNG";
+            document.getElementById('headerId').textContent = currentUser ? `ID: ${currentUser.id}` : "ID: -";
+            document.getElementById('headerVerified').classList.toggle('hidden', currentUser?.name !== "BOTMARCEL");
         }
 
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(`page-${page}`).classList.remove('hidden');
 
-            if (page === 'setting' && currentUser) {
+            if (page === 'profil' && currentUser) {
                 document.getElementById('profileName').value = currentUser.name;
                 document.getElementById('profileId').value = currentUser.id;
-                document.getElementById('profileAvatar').innerHTML = currentUser.avatar || '👤';
+                const bigAvatar = document.getElementById('profileAvatarBig');
+                if (currentUser.avatarUrl) {
+                    bigAvatar.innerHTML = `<img src="${currentUser.avatarUrl}" class="w-full h-full object-cover preview-img">`;
+                } else {
+                    bigAvatar.innerHTML = currentUser.avatar || '👤';
+                }
             }
 
             if (page === 'devPanel' && currentUser?.isDev) {
@@ -207,31 +219,30 @@
 
         function toggleProfileMenu() {
             if (!currentUser) openModal();
-            else showPage('setting');
+            else showPage('profil');
         }
 
-        // Modal Auth
+        // Modal
         function openModal() { document.getElementById('authModal').classList.remove('hidden'); switchTab(0); }
         function closeModal() { document.getElementById('authModal').classList.add('hidden'); }
-
         function switchTab(tab) {
             document.getElementById('loginForm').classList.toggle('hidden', tab !== 0);
             document.getElementById('registerForm').classList.toggle('hidden', tab !== 1);
         }
 
+        // Register & Login (sama seperti sebelumnya, ringkas)
         function register() {
-            // ... (sama seperti sebelumnya, saya ringkas)
             const name = document.getElementById('regName').value.trim();
             if (!name) return alert("Nama harus diisi!");
-
             if (accounts.some(a => a.name === name)) return alert("Nama sudah digunakan!");
 
             const newAcc = {
-                name, 
-                id: document.getElementById('regId').value || "ID-" + Date.now(),
+                name,
+                id: document.getElementById('regId').value || "ID-" + Math.floor(Math.random()*999999),
                 email: document.getElementById('regEmail').value,
                 password: document.getElementById('regPass').value,
-                avatar: '👤'
+                avatar: '👤',
+                avatarUrl: null
             };
 
             accounts.push(newAcc);
@@ -241,28 +252,21 @@
             alert("✅ Akun berhasil dibuat!");
             closeModal();
             updateHeader();
-            showPage('dashboard');
+            showPage('profil');
         }
 
         function login() {
             const input = document.getElementById('loginName').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
 
-            // Login DEV
             if (input === DEV_EMAIL && pass === DEV_PASS) {
-                currentUser = {
-                    name: "BOTMARCEL",
-                    id: "999999",
-                    email: DEV_EMAIL,
-                    avatar: '👤',
-                    isDev: true
-                };
+                currentUser = { name: "BOTMARCEL", id: "999999", email: DEV_EMAIL, avatar: '👤', isDev: true, avatarUrl: null };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                alert("✅ Login DEV berhasil! (Verified)");
+                alert("✅ Login DEV berhasil!");
+                document.getElementById('devMenu').classList.remove('hidden');
                 closeModal();
                 updateHeader();
-                document.getElementById('devMenu').classList.remove('hidden');
-                showPage('dashboard');
+                showPage('profil');
                 return;
             }
 
@@ -273,16 +277,15 @@
                 alert("✅ Login berhasil!");
                 closeModal();
                 updateHeader();
-                showPage('dashboard');
-            } else {
-                alert("❌ Login gagal!");
-            }
+                showPage('profil');
+            } else alert("❌ Login gagal!");
         }
 
         function logout() {
             if (confirm("Keluar dari akun?")) {
                 currentUser = null;
                 localStorage.removeItem('currentUser');
+                document.getElementById('devMenu').classList.add('hidden');
                 updateHeader();
                 showPage('dashboard');
             }
@@ -290,64 +293,69 @@
 
         function confirmDeleteAccount() {
             if (!currentUser) return;
-            if (confirm("HAPUS AKUN PERMANEN?") && confirm("⚠️ AKSI INI TIDAK BISA DIBATALKAN!")) {
+            if (confirm("Hapus akun PERMANEN?") && confirm("⚠️ TIDAK BISA DIBATALKAN!")) {
                 deletedAccounts.push({...currentUser, deletedAt: new Date().toLocaleString()});
                 accounts = accounts.filter(a => a.id !== currentUser.id);
                 saveData();
                 logout();
-                alert("Akun telah dihapus permanen.");
             }
         }
 
-        function changeProfilePic() {
-            if (!currentUser) return;
-            const emoji = prompt("Masukkan emoji baru untuk foto profil:", currentUser.avatar || "👤");
-            if (emoji) {
-                currentUser.avatar = emoji;
+        // Upload Gambar Profil
+        function triggerFileUpload() {
+            document.getElementById('avatarInput').click();
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file || !currentUser) return;
+
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                currentUser.avatarUrl = ev.target.result;
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 updateHeader();
-                showPage('setting');
-            }
+                showPage('profil');
+            };
+            reader.readAsDataURL(file);
         }
 
         function renderDevPanel() {
-            // Players
-            const accList = document.getElementById('accountsList');
-            accList.innerHTML = accounts.map((acc, i) => `
+            // Left - Players
+            document.getElementById('accountsList').innerHTML = accounts.map((acc, i) => `
                 <div class="bg-gray-800 p-5 rounded-2xl flex justify-between items-center">
                     <div>
-                        <div class="font-medium">${acc.name}</div>
-                        <div class="text-sm text-gray-400">ID: ${acc.id} • ${acc.email}</div>
+                        <div>${acc.avatarUrl ? '🖼️' : acc.avatar} ${acc.name}</div>
+                        <div class="text-sm text-gray-400">ID: ${acc.id} • ${acc.email || 'No Email'}</div>
                     </div>
-                    <button onclick="devDeleteAccount(${i})" class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-xl text-sm">DELETE</button>
+                    <button onclick="devDeleteAccount(${i})" class="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-xl text-sm">DELETE</button>
                 </div>
             `).join('');
 
-            // Deleted
-            const delList = document.getElementById('deletedList');
-            delList.innerHTML = deletedAccounts.map(acc => `
-                <div class="bg-gray-800/50 p-5 rounded-2xl opacity-75">
-                    <div class="font-medium text-red-400">${acc.name}</div>
-                    <div class="text-sm text-gray-400">ID: ${acc.id} • Dihapus: ${acc.deletedAt}</div>
+            // Right - Deleted
+            document.getElementById('deletedList').innerHTML = deletedAccounts.map(acc => `
+                <div class="bg-gray-800/60 p-5 rounded-2xl">
+                    <div class="text-red-400">${acc.name}</div>
+                    <div class="text-xs text-gray-500">ID: ${acc.id} • Dihapus: ${acc.deletedAt}</div>
                 </div>
             `).join('');
         }
 
-        function devDeleteAccount(index) {
-            if (confirm("Hapus akun player ini secara permanen?")) {
-                const acc = accounts[index];
+        function devDeleteAccount(i) {
+            if (confirm("Hapus akun ini secara permanen?")) {
+                const acc = accounts[i];
                 deletedAccounts.push({...acc, deletedAt: new Date().toLocaleString()});
-                accounts.splice(index, 1);
+                accounts.splice(i, 1);
                 saveData();
                 renderDevPanel();
             }
         }
 
-        // Init
+        // Initialize
         window.onload = () => {
-            const saved = localStorage.getItem('currentUser');
-            if (saved) {
-                currentUser = JSON.parse(saved);
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
                 if (currentUser.isDev) document.getElementById('devMenu').classList.remove('hidden');
             }
             updateHeader();
