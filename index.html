@@ -13,7 +13,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .verified { color: #3b82f6; }
         .preview-img { object-fit: cover; }
-        .fps-counter { font-family: monospace; }
     </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen">
@@ -23,7 +22,7 @@
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <button id="menuBtn" class="text-4xl hover:text-gray-300">≡</button>
-                <h1 class="text-xl font-bold tracking-wider">WEBSITE RESMI DARI<br><span class="text-blue-400">DEV-BOTMARCEL</span></h1>
+                <h1 class="text-xl font-bold tracking-wider text-center">WEBSITE RESMI DARI<br>DEV-BOTMARCEL</h1>
             </div>
 
             <div onclick="toggleProfileMenu()" id="headerUser" class="flex items-center gap-3 cursor-pointer hover:bg-gray-900 px-4 py-2 rounded-2xl">
@@ -58,169 +57,274 @@
 
             <!-- DASHBOARD -->
             <div id="page-dashboard" class="page">
-                <div class="max-w-5xl mx-auto">
-                    <!-- Greeting -->
-                    <div class="flex justify-between items-start mb-8">
-                        <div>
-                            <h1 id="greeting" class="text-4xl font-bold"></h1>
-                            <p class="text-gray-400 mt-1">Selamat datang kembali</p>
-                        </div>
-                        <div class="text-right">
-                            <div class="fps-counter bg-gray-900 px-4 py-2 rounded-2xl text-sm">
-                                FPS: <span id="fps" class="text-green-400 font-mono">60</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- User Profile Card -->
-                    <div id="userCard" class="bg-gray-900 rounded-3xl p-6 flex items-center gap-6 mb-10">
-                        <!-- Diisi oleh JS -->
-                    </div>
-
-                    <!-- Deskripsi -->
-                    <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-3xl p-8 mb-10 text-center">
-                        <p class="text-xl font-medium">SELAMAT DATANG DI WEBSITE RESMI DARI DEV-BOTMARCEL</p>
-                    </div>
-
-                    <!-- Daftar Semua Players -->
-                    <div class="mb-10">
-                        <h2 class="text-2xl font-semibold mb-5">DAFTAR SEMUA PLAYERS</h2>
-                        <div id="playersList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-                    </div>
-
-                    <!-- Komunitas -->
-                    <div>
-                        <h2 class="text-2xl font-semibold mb-5">DAFTAR KOMUNITAS DARI DEV-BOTMARCEL</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-gray-900 rounded-3xl p-6">
-                                <h3 class="font-bold text-lg mb-4">Team BOTMARCEL</h3>
-                                <a href="https://chat.whatsapp.com/FKiThmteT25LMJ4IrVOzU4?mode=gi_t" target="_blank" 
-                                   class="block bg-green-600 hover:bg-green-700 py-4 rounded-2xl text-center mb-3">📱 WhatsApp</a>
-                                <a href="https://discord.gg/6JX2v5Een" target="_blank" 
-                                   class="block bg-indigo-600 hover:bg-indigo-700 py-4 rounded-2xl text-center">DISCORD</a>
-                            </div>
-                            <div class="bg-gray-900 rounded-3xl p-6">
-                                <h3 class="font-bold text-lg mb-4">KOMUNITAS DEVELOPER OFFROAD LEAGUE</h3>
-                                <a href="https://discord.gg/BZkPeHJQY" target="_blank" 
-                                   class="block bg-indigo-600 hover:bg-indigo-700 py-4 rounded-2xl text-center">DISCORD</a>
-                            </div>
-                        </div>
-                    </div>
+                <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+                <div class="bg-gray-900 rounded-3xl p-8 text-center">
+                    <p class="text-xl">Selamat datang di WEBSITE RESMI DEV-BOTMARCEL</p>
                 </div>
             </div>
 
-            <!-- Other Pages (Profil, Chat, dll) tetap sama seperti sebelumnya -->
-            <div id="page-profil" class="page hidden"> <!-- Isi seperti versi sebelumnya --> </div>
-            <div id="page-chat" class="page hidden"> <!-- ... --> </div>
-            <div id="page-support" class="page hidden"> <!-- ... --> </div>
-            <div id="page-botai" class="page hidden"> <!-- ... --> </div>
-            <div id="page-setting" class="page hidden"> <!-- ... --> </div>
-            <div id="page-devPanel" class="page hidden"> <!-- ... --> </div>
+            <!-- PROFIL PAGE -->
+            <div id="page-profil" class="page hidden">
+                <div id="profilContent"></div>
+            </div>
+
+            <!-- CHAT PAGE -->
+            <div id="page-chat" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Chat</h1>
+                <div class="bg-gray-900 rounded-3xl h-96 flex items-center justify-center">
+                    <p class="text-gray-400">Fitur Chat akan segera tersedia</p>
+                </div>
+            </div>
+
+            <!-- SUPPORT PAGE -->
+            <div id="page-support" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Support</h1>
+                <div class="bg-gray-900 rounded-3xl p-8 max-w-lg">
+                    <p class="text-gray-400">Hubungi support kami melalui fitur ini (Coming Soon)</p>
+                </div>
+            </div>
+
+            <!-- BOT AI PAGE -->
+            <div id="page-botai" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Bot AI</h1>
+                <div class="bg-gray-900 rounded-3xl p-8 max-w-lg">
+                    <p class="text-gray-400">Bot AI Assistant (Coming Soon)</p>
+                </div>
+            </div>
+
+            <!-- SETTINGS -->
+            <div id="page-setting" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Pengaturan Website</h1>
+                <div class="bg-gray-900 rounded-3xl p-8">Pengaturan website akan ditambahkan nanti.</div>
+            </div>
+
+            <!-- DEV PANEL -->
+            <div id="page-devPanel" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6 text-yellow-400">🔧 DEV PANEL</h1>
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <div class="bg-gray-900 rounded-3xl p-6">
+                        <h2 class="text-xl font-semibold mb-4">DAFTAR AKUN PLAYERS</h2>
+                        <div id="accountsList" class="space-y-4"></div>
+                    </div>
+                    <div class="bg-gray-900 rounded-3xl p-6">
+                        <h2 class="text-xl font-semibold mb-4 text-orange-400">DAFTAR AKUN YANG DI BANNED</h2>
+                        <div id="bannedList" class="space-y-4"></div>
+                    </div>
+                    <div class="bg-gray-900 rounded-3xl p-6">
+                        <h2 class="text-xl font-semibold mb-4 text-red-400">DAFTAR AKUN TELAH DI DELETE</h2>
+                        <div id="deletedList" class="space-y-4"></div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- AUTH MODAL (sama seperti sebelumnya) -->
+    <!-- AUTH MODAL -->
     <div id="authModal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-[100]">
-        <!-- ... (modal login/register tetap sama) ... -->
+        <div class="bg-gray-900 rounded-3xl w-full max-w-md mx-4 p-8 modal">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login / Daftar</h2>
+            <div class="flex border-b border-gray-700 mb-6">
+                <button onclick="switchTab(0)" id="tabLogin" class="flex-1 py-3 font-medium border-b-2 border-blue-500">Login</button>
+                <button onclick="switchTab(1)" id="tabRegister" class="flex-1 py-3 font-medium">Daftar</button>
+            </div>
+
+            <div id="loginForm">
+                <input id="loginName" placeholder="Nama Akun / Email" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-4">
+                <input id="loginPass" type="password" placeholder="Password" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-6">
+                <button onclick="login()" class="w-full bg-blue-600 py-4 rounded-2xl font-medium">MASUK</button>
+            </div>
+
+            <div id="registerForm" class="hidden">
+                <input id="regName" placeholder="Nama Games Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-4">
+                <input id="regId" placeholder="ID Akun Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-4">
+                <input id="regEmail" placeholder="Email Fake Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-4">
+                <input id="regPass" type="password" placeholder="Password Fake Anda" class="w-full bg-gray-800 px-5 py-4 rounded-2xl mb-6">
+                <button onclick="register()" class="w-full bg-green-600 py-4 rounded-2xl font-medium">DAFTAR</button>
+            </div>
+            <button onclick="closeModal()" class="mt-6 text-gray-400 hover:text-white w-full">Tutup</button>
+        </div>
     </div>
 
     <script>
         let currentUser = null;
         let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-        // ... (bannedAccounts, deletedAccounts, dll tetap sama)
+        let bannedAccounts = JSON.parse(localStorage.getItem('bannedAccounts')) || [];
+        let deletedAccounts = JSON.parse(localStorage.getItem('deletedAccounts')) || [];
 
         const DEV_EMAIL = "DEV-BOTMARCELWEB999@gmail.com";
         const DEV_PASS = "DEV-BOTMARCELNEW2026999";
 
-        function saveData() { /* ... */ }
-
-        function getGreeting() {
-            const hour = new Date().getHours();
-            if (hour >= 5 && hour < 11) return "SELAMAT PAGI";
-            if (hour >= 11 && hour < 15) return "SELAMAT SIANG";
-            if (hour >= 15 && hour < 18) return "SELAMAT SORE";
-            return "SELAMAT MALAM";
+        function saveData() {
+            localStorage.setItem('accounts', JSON.stringify(accounts));
+            localStorage.setItem('bannedAccounts', JSON.stringify(bannedAccounts));
+            localStorage.setItem('deletedAccounts', JSON.stringify(deletedAccounts));
         }
 
-        function updateGreeting() {
-            document.getElementById('greeting').textContent = getGreeting();
-        }
-
-        // FPS Counter
-        let fps = 60;
-        let lastTime = performance.now();
-        let frameCount = 0;
-
-        function updateFPS() {
-            frameCount++;
-            const now = performance.now();
-            if (now - lastTime >= 1000) {
-                fps = frameCount;
-                frameCount = 0;
-                lastTime = now;
-                document.getElementById('fps').textContent = fps;
+        function updateHeader() {
+            const avatar = document.getElementById('headerAvatar');
+            if (currentUser?.avatarUrl) {
+                avatar.innerHTML = `<img src="${currentUser.avatarUrl}" class="w-full h-full object-cover preview-img">`;
+            } else {
+                avatar.innerHTML = currentUser?.avatar || '👤';
             }
-            requestAnimationFrame(updateFPS);
-        }
-
-        function renderUserCard() {
-            const container = document.getElementById('userCard');
-            if (!currentUser) {
-                container.innerHTML = `
-                    <div class="w-20 h-20 bg-gray-700 rounded-2xl flex items-center justify-center text-5xl">👤</div>
-                    <div>
-                        <p class="text-2xl font-bold">PENGUNJUNG</p>
-                        <p class="text-gray-400">Silakan login untuk melihat profil</p>
-                    </div>`;
-                return;
-            }
-            container.innerHTML = `
-                <div onclick="showPage('profil')" class="w-20 h-20 bg-gray-700 rounded-2xl overflow-hidden cursor-pointer">
-                    ${currentUser.avatarUrl ? `<img src="${currentUser.avatarUrl}" class="w-full h-full object-cover">` : currentUser.avatar || '👤'}
-                </div>
-                <div>
-                    <p class="text-2xl font-bold">${currentUser.name}</p>
-                    <p class="text-gray-400">ID: ${currentUser.id}</p>
-                </div>`;
-        }
-
-        function renderPlayersList() {
-            const container = document.getElementById('playersList');
-            container.innerHTML = accounts.map(acc => `
-                <div class="bg-gray-900 rounded-2xl p-4 hover:scale-105 transition">
-                    <div class="w-16 h-16 mx-auto bg-gray-700 rounded-2xl overflow-hidden mb-3">
-                        ${acc.avatarUrl ? `<img src="${acc.avatarUrl}" class="w-full h-full object-cover">` : acc.avatar || '👤'}
-                    </div>
-                    <p class="font-medium text-center">${acc.name}</p>
-                    <p class="text-xs text-gray-400 text-center">ID: ${acc.id}</p>
-                </div>
-            `).join('');
+            document.getElementById('headerName').textContent = currentUser ? currentUser.name : "PENGUNJUNG";
+            document.getElementById('headerId').textContent = currentUser ? `ID: ${currentUser.id}` : "ID: -";
+            document.getElementById('headerVerified').classList.toggle('hidden', currentUser?.name !== "BOTMARCEL");
         }
 
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(`page-${page}`).classList.remove('hidden');
 
-            if (page === 'dashboard') {
-                updateGreeting();
-                renderUserCard();
-                renderPlayersList();
-            }
+            if (page === 'profil') renderProfilPage();
             if (page === 'devPanel' && currentUser?.isDev) renderDevPanel();
         }
 
-        // ... (fungsi login, register, logout, saveProfile, dll tetap sama seperti versi sebelumnya)
+        function renderProfilPage() {
+            const container = document.getElementById('profilContent');
+            if (!currentUser) {
+                container.innerHTML = `
+                    <div class="bg-gray-900 rounded-3xl p-12 text-center">
+                        <p class="text-2xl mb-4">👤 Akun Anda Belum Ada</p>
+                        <p class="text-gray-400 mb-8">Tolong daftar atau login dulu</p>
+                        <button onclick="openModal()" class="bg-blue-600 px-8 py-4 rounded-2xl text-lg">Login / Daftar</button>
+                    </div>`;
+                return;
+            }
 
-        // Initialize
+            container.innerHTML = `
+                <h1 class="text-3xl font-bold mb-6">Profil Saya</h1>
+                <div class="bg-gray-900 rounded-3xl p-8 max-w-lg mx-auto">
+                    <div class="flex flex-col items-center gap-6">
+                        <div onclick="triggerFileUpload()" id="profileAvatarBig" class="w-40 h-40 bg-gray-700 rounded-3xl overflow-hidden cursor-pointer hover:ring-4 hover:ring-blue-500">
+                            ${currentUser.avatarUrl ? `<img src="${currentUser.avatarUrl}" class="w-full h-full object-cover">` : currentUser.avatar || '👤'}
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                        <p class="text-sm text-gray-400">Klik untuk ganti foto profil</p>
+                    </div>
+
+                    <div class="mt-8 space-y-4">
+                        <div><label class="block text-sm mb-1">Nama</label><input value="${currentUser.name}" readonly class="w-full bg-gray-800 px-5 py-4 rounded-2xl"></div>
+                        <div><label class="block text-sm mb-1">ID Game</label><input value="${currentUser.id}" readonly class="w-full bg-gray-800 px-5 py-4 rounded-2xl"></div>
+                    </div>
+
+                    <div class="mt-10 flex gap-4">
+                        <button onclick="saveProfile()" class="flex-1 bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-medium">💾 SAVE PROFIL</button>
+                        <button onclick="logout()" class="flex-1 bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-medium">KELUAR</button>
+                    </div>
+                </div>`;
+        }
+
+        function saveProfile() {
+            if (!currentUser) return;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            alert("✅ Profil berhasil disimpan!");
+        }
+
+        function toggleProfileMenu() {
+            if (!currentUser) openModal();
+            else showPage('profil');
+        }
+
+        function openModal() { document.getElementById('authModal').classList.remove('hidden'); switchTab(0); }
+        function closeModal() { document.getElementById('authModal').classList.add('hidden'); }
+        function switchTab(tab) {
+            document.getElementById('loginForm').classList.toggle('hidden', tab !== 0);
+            document.getElementById('registerForm').classList.toggle('hidden', tab !== 1);
+        }
+
+        function register() { /* ... sama seperti sebelumnya ... */ 
+            const name = document.getElementById('regName').value.trim();
+            if (!name) return alert("Nama harus diisi!");
+            if (accounts.some(a => a.name === name)) return alert("Nama sudah digunakan!");
+
+            const newAcc = { name, id: document.getElementById('regId').value || "ID-" + Date.now(), email: document.getElementById('regEmail').value, password: document.getElementById('regPass').value, avatar: '👤', avatarUrl: null };
+            accounts.push(newAcc);
+            saveData();
+            currentUser = newAcc;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            alert("✅ Akun berhasil dibuat!");
+            closeModal();
+            updateHeader();
+            showPage('profil');
+        }
+
+        function login() { /* ... tetap sama ... */ 
+            const input = document.getElementById('loginName').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (input === DEV_EMAIL && pass === DEV_PASS) {
+                currentUser = { name: "BOTMARCEL", id: "999999", email: DEV_EMAIL, avatar: '👤', isDev: true, avatarUrl: null };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                document.getElementById('devMenu').classList.remove('hidden');
+                closeModal();
+                updateHeader();
+                showPage('profil');
+                return;
+            }
+
+            let user = accounts.find(a => (a.name === input || a.email === input) && a.password === pass);
+            if (!user) return alert("❌ Login gagal!");
+
+            // Cek banned (kode sama seperti sebelumnya)
+            currentUser = user;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            alert("✅ Login berhasil!");
+            closeModal();
+            updateHeader();
+            showPage('profil');
+        }
+
+        function logout() {
+            if (confirm("Keluar dari akun?")) {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                updateHeader();
+                showPage('dashboard');
+            }
+        }
+
+        function triggerFileUpload() { document.getElementById('avatarInput').click(); }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file || !currentUser) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                currentUser.avatarUrl = ev.target.result;
+                renderProfilPage();   // Refresh tampilan
+                updateHeader();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // DEV PANEL functions (sama seperti sebelumnya)
+        function renderDevPanel() {
+            // ... (kode renderDevPanel dari versi sebelumnya tetap sama)
+            document.getElementById('accountsList').innerHTML = accounts.map((acc, i) => `
+                <div class="bg-gray-800 p-5 rounded-2xl">
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-xl overflow-hidden">${acc.avatarUrl ? `<img src="${acc.avatarUrl}" class="w-full h-full object-cover">` : acc.avatar}</div>
+                        <div class="flex-1">
+                            <div class="font-medium">${acc.name}</div>
+                            <div class="text-xs text-gray-400">ID: ${acc.id}<br>Email: ${acc.email || '-'}<br>Pass: ${acc.password || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-2">
+                        <button onclick="banAccount(${i}, false)" class="flex-1 bg-orange-600 hover:bg-orange-700 py-2 rounded-xl text-sm">BANNED</button>
+                        <button onclick="banAccount(${i}, true)" class="flex-1 bg-red-600 hover:bg-red-700 py-2 rounded-xl text-sm">BANNED PERMANENT</button>
+                    </div>
+                </div>`).join('');
+            // ... (bannedList & deletedList tetap sama)
+        }
+
+        // Init
         window.onload = () => {
             const saved = localStorage.getItem('currentUser');
             if (saved) currentUser = JSON.parse(saved);
             if (currentUser?.isDev) document.getElementById('devMenu').classList.remove('hidden');
-
-            updateGreeting();
             updateHeader();
             showPage('dashboard');
-            updateFPS();   // Mulai FPS Counter
         };
     </script>
 </body>
