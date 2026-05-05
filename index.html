@@ -7,231 +7,178 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(16px);
-        }
         .card {
             transition: all 0.3s ease;
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+        .sidebar-active {
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            color: #0f172a;
+            font-weight: 700;
         }
     </style>
 </head>
-<body class="bg-[#1a0f2e] text-white overflow-hidden h-screen">
+<body class="bg-[#1a0f2e] text-white h-screen overflow-hidden">
 
     <div class="flex h-full">
 
         <!-- Sidebar -->
-        <div class="w-56 bg-[#1f1338] border-r border-purple-900 flex flex-col">
-            <div class="p-5 border-b border-purple-800">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+        <div class="w-72 bg-[#1f1338] border-r border-purple-900 flex flex-col">
+            <div class="p-6 border-b border-purple-800">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-3xl flex items-center justify-center text-3xl shadow-lg">
                         👤
                     </div>
                     <div>
-                        <p class="font-semibold text-base">Marcel Agustian</p>
-                        <p class="text-xs text-emerald-400">Online</p>
+                        <p class="font-bold text-lg">Marcel Agustian</p>
+                        <p class="text-emerald-400 text-sm">Administrator</p>
                     </div>
                 </div>
             </div>
 
-            <nav class="flex-1 px-3 py-6 space-y-1 text-sm">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-cyan-400 text-black font-semibold">
-                    <i class="fas fa-home"></i>
+            <nav class="flex-1 px-4 py-8 space-y-2">
+                <a href="#" class="sidebar-active flex items-center gap-4 px-5 py-4 rounded-3xl text-base">
+                    <i class="fas fa-home w-5"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-2xl transition-colors">
-                    <i class="fas fa-comments"></i>
+                <a href="#" class="flex items-center gap-4 px-5 py-4 hover:bg-white/10 rounded-3xl transition-all text-base">
+                    <i class="fas fa-comments w-5"></i>
                     <span>Chat</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-2xl transition-colors">
-                    <i class="fas fa-star"></i>
+                <a href="#" class="flex items-center gap-4 px-5 py-4 hover:bg-white/10 rounded-3xl transition-all text-base">
+                    <i class="fas fa-star w-5"></i>
                     <span>Favorites</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-2xl transition-colors">
-                    <i class="fas fa-chart-bar"></i>
+                <a href="#" class="flex items-center gap-4 px-5 py-4 hover:bg-white/10 rounded-3xl transition-all text-base">
+                    <i class="fas fa-chart-bar w-5"></i>
                     <span>Statistics</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-2xl transition-colors">
-                    <i class="fas fa-cog"></i>
+                <a href="#" class="flex items-center gap-4 px-5 py-4 hover:bg-white/10 rounded-3xl transition-all text-base">
+                    <i class="fas fa-cog w-5"></i>
                     <span>Settings</span>
                 </a>
             </nav>
 
-            <div class="p-4 border-t border-purple-800 text-xs text-gray-500">
-                © 2026 Your Dashboard
+            <div class="p-6 border-t border-purple-800 text-xs text-gray-500">
+                © 2026 Marcel Dashboard
             </div>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col h-full overflow-hidden">
-            
-            <!-- Header -->
+        <div class="flex-1 flex flex-col h-full">
+
+            <!-- Top Header -->
             <header class="h-16 bg-[#2a1b4a] border-b border-purple-800 px-8 flex items-center justify-between">
-                <div class="flex items-center gap-4 flex-1">
-                    <div class="relative w-80">
+                <div class="flex items-center gap-6 flex-1">
+                    <div class="relative w-96">
                         <input type="text" id="search" 
                                class="w-full bg-[#1a1033] border border-purple-700 focus:border-cyan-400 rounded-full py-3 px-5 pl-12 outline-none text-sm"
-                               placeholder="Search anything...">
+                               placeholder="Cari data, laporan, atau pengguna...">
                         <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
-                
-                <h1 class="text-2xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-purple-400">
+
+                <h1 class="text-3xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400">
                     YOUR TITLE
                 </h1>
 
-                <div class="flex items-center gap-6 flex-1 justify-end">
-                    <button onclick="toggleNotifications()" class="relative text-xl hover:text-cyan-400 transition">
+                <div class="flex items-center gap-8 flex-1 justify-end">
+                    <button onclick="toggleNotifications()" class="relative text-2xl hover:text-cyan-400 transition-colors">
                         <i class="fas fa-bell"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
                     </button>
+                    
                     <div class="flex items-center gap-3">
                         <div class="text-right">
-                            <p class="font-medium text-sm">Marcel Trisno</p>
-                            <p class="text-emerald-400 text-xs">Administrator</p>
+                            <p class="font-semibold">Marcel Trisno</p>
+                            <p class="text-xs text-emerald-400">Online • Pekanbaru</p>
                         </div>
-                        <div class="w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-400 rounded-2xl"></div>
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-400 rounded-2xl ring-2 ring-purple-400"></div>
                     </div>
                 </div>
             </header>
 
-            <!-- Dashboard Body - Optimized for One Screen -->
-            <div class="flex-1 p-6 overflow-auto">
-                <div class="grid grid-cols-12 gap-5 h-full">
+            <!-- Dashboard Content -->
+            <div class="flex-1 p-8 overflow-auto bg-gradient-to-br from-[#1a0f2e] to-[#2a1b4a]">
+                <div class="grid grid-cols-12 gap-6">
 
-                    <!-- Top Metrics -->
-                    <div class="col-span-12 grid grid-cols-4 gap-5">
-                        <div class="bg-[#2a1b4a] border border-purple-700 rounded-3xl p-5 card">
-                            <p class="text-gray-400 text-sm">Total Users</p>
-                            <p class="text-4xl font-bold mt-2">153,2K</p>
-                            <canvas id="chart1" class="mt-6 h-20"></canvas>
+                    <!-- Donut Chart -->
+                    <div class="col-span-5 bg-[#2a1b4a] border border-purple-700 rounded-3xl p-8 card flex flex-col items-center">
+                        <h3 class="text-xl font-semibold mb-6">Overall Progress</h3>
+                        <div class="relative w-72 h-72">
+                            <canvas id="doughnutChart"></canvas>
+                            <div class="absolute inset-0 flex items-center justify-center text-center">
+                                <div>
+                                    <span class="text-7xl font-bold text-cyan-400">65</span>
+                                    <span class="text-5xl font-bold text-cyan-400">%</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-[#2a1b4a] border border-purple-700 rounded-3xl p-5 card">
-                            <p class="text-gray-400 text-sm">Revenue</p>
-                            <p class="text-4xl font-bold mt-2">$20.451</p>
-                            <canvas id="chart2" class="mt-6 h-20"></canvas>
-                        </div>
-                        <div class="bg-[#2a1b4a] border border-purple-700 rounded-3xl p-5 card">
-                            <p class="text-gray-400 text-sm">Conversion Rate</p>
-                            <p class="text-4xl font-bold mt-2">74.2%</p>
-                            <canvas id="chart3" class="mt-6 h-20"></canvas>
-                        </div>
-                        <div class="bg-[#2a1b4a] border border-purple-700 rounded-3xl p-5 card">
-                            <p class="text-gray-400 text-sm">New Orders</p>
-                            <p class="text-4xl font-bold mt-2">1.284</p>
-                            <div class="flex gap-1 h-20 items-end mt-6">
-                                <div class="bg-cyan-400 w-1/5 h-2/3 rounded-t"></div>
-                                <div class="bg-purple-500 w-1/5 h-4/5 rounded-t"></div>
-                                <div class="bg-cyan-400 w-1/5 h-full rounded-t"></div>
-                                <div class="bg-purple-500 w-1/5 h-3/4 rounded-t"></div>
-                                <div class="bg-cyan-400 w-1/5 h-1/2 rounded-t"></div>
+                        <button onclick="alert('Action Confirmed! 🎉')" 
+                                class="mt-10 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 px-12 py-4 rounded-2xl font-semibold text-lg transition-all">
+                            AGREE & CONTINUE
+                        </button>
+                    </div>
+
+                    <!-- Progress Bars -->
+                    <div class="col-span-3 bg-[#2a1b4a] border border-purple-700 rounded-3xl p-8 card">
+                        <h3 class="font-semibold mb-8 text-lg">Project Progress</h3>
+                        <div class="space-y-8">
+                            <div>
+                                <div class="flex justify-between mb-3">
+                                    <span>Frontend Development</span>
+                                    <span class="font-medium">50%</span>
+                                </div>
+                                <div class="h-4 bg-gray-700 rounded-2xl overflow-hidden">
+                                    <div class="h-4 w-1/2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-2xl"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-3">
+                                    <span>Backend API</span>
+                                    <span class="font-medium">70%</span>
+                                </div>
+                                <div class="h-4 bg-gray-700 rounded-2xl overflow-hidden">
+                                    <div class="h-4 w-[70%] bg-gradient-to-r from-cyan-400 to-purple-500 rounded-2xl"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-3">
+                                    <span>Testing & QA</span>
+                                    <span class="font-medium">25%</span>
+                                </div>
+                                <div class="h-4 bg-gray-700 rounded-2xl overflow-hidden">
+                                    <div class="h-4 w-1/4 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-2xl"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Bottom Section -->
-                    <div class="col-span-12 grid grid-cols-12 gap-5 flex-1">
-                        
-                        <!-- Donut Chart -->
-                        <div class="col-span-4 bg-[#2a1b4a] border border-purple-700 rounded-3xl p-6 flex flex-col items-center justify-center card">
-                            <div class="relative w-52 h-52">
-                                <canvas id="doughnutChart"></canvas>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span class="text-6xl font-bold text-cyan-400">65%</span>
-                                    <span class="text-sm text-gray-400">Overall Progress</span>
-                                </div>
-                            </div>
-                            <button onclick="alert('Action Confirmed!')" 
-                                    class="mt-6 bg-gradient-to-r from-cyan-500 to-purple-600 px-10 py-3 rounded-2xl font-semibold hover:scale-105 transition">
-                                AGREE
-                            </button>
-                        </div>
-
-                        <!-- Progress Bars -->
-                        <div class="col-span-4 bg-[#2a1b4a] border border-purple-700 rounded-3xl p-6 card">
-                            <h3 class="font-semibold mb-6">Project Progress</h3>
-                            <div class="space-y-7">
-                                <div>
-                                    <div class="flex justify-between mb-2 text-sm">
-                                        <span>Frontend Development</span>
-                                        <span class="font-medium">50%</span>
-                                    </div>
-                                    <div class="h-3 bg-gray-700 rounded-full"><div class="h-3 w-1/2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-sm">
-                                        <span>Backend API</span>
-                                        <span class="font-medium">70%</span>
-                                    </div>
-                                    <div class="h-3 bg-gray-700 rounded-full"><div class="h-3 w-[70%] bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-2 text-sm">
-                                        <span>Testing</span>
-                                        <span class="font-medium">25%</span>
-                                    </div>
-                                    <div class="h-3 bg-gray-700 rounded-full"><div class="h-3 w-1/4 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"></div></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bar Chart -->
-                        <div class="col-span-4 bg-[#2a1b4a] border border-purple-700 rounded-3xl p-6 card">
-                            <h3 class="font-semibold mb-4">Monthly Performance</h3>
-                            <canvas id="barChart" class="h-64"></canvas>
-                        </div>
+                    <!-- Bar Chart -->
+                    <div class="col-span-4 bg-[#2a1b4a] border border-purple-700 rounded-3xl p-8 card">
+                        <h3 class="font-semibold mb-6 text-lg">Monthly Performance</h3>
+                        <canvas id="barChart" class="h-96"></canvas>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function setActive(el) {
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('bg-cyan-400', 'text-black', 'font-semibold'));
-            el.classList.add('bg-cyan-400', 'text-black', 'font-semibold');
-        }
-
-        // Wave Charts
-        function createWaveChart(id, color) {
-            new Chart(document.getElementById(id), {
-                type: 'line',
-                data: {
-                    labels: ["", "", "", "", "", "", ""],
-                    datasets: [{
-                        data: [30, 55, 40, 70, 45, 80, 65],
-                        borderColor: color,
-                        backgroundColor: 'rgba(34, 211, 238, 0.1)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        pointRadius: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { x: { display: false }, y: { display: false } }
-                }
-            });
-        }
-
+        // Wave Charts (tidak digunakan lagi karena card dihapus)
         window.onload = () => {
-            createWaveChart('chart1', '#22d3ee');
-            createWaveChart('chart2', '#a855f7');
-            createWaveChart('chart3', '#67e8f9');
-
-            // Doughnut
+            // Doughnut Chart
             new Chart(document.getElementById('doughnutChart'), {
                 type: 'doughnut',
                 data: {
@@ -242,18 +189,23 @@
                         cutout: '78%'
                     }]
                 },
-                options: { responsive: true, plugins: { legend: { display: false }} }
+                options: { 
+                    responsive: true, 
+                    plugins: { legend: { display: false } } 
+                }
             });
 
             // Bar Chart
             new Chart(document.getElementById('barChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
-                        data: [68, 75, 82, 95, 71, 88],
+                        label: 'Performance',
+                        data: [72, 68, 85, 92, 78, 88],
                         backgroundColor: '#67e8f9',
-                        borderRadius: 6,
+                        borderRadius: 10,
+                        barThickness: 32,
                     }]
                 },
                 options: {
@@ -261,15 +213,21 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { grid: { color: 'rgba(255,255,255,0.08)' }, ticks: { color: '#64748b' }},
-                        x: { grid: { color: 'rgba(255,255,255,0.08)' }, ticks: { color: '#64748b' }}
+                        y: { 
+                            grid: { color: 'rgba(255,255,255,0.08)' }, 
+                            ticks: { color: '#94a3b8' } 
+                        },
+                        x: { 
+                            grid: { color: 'rgba(255,255,255,0.08)' }, 
+                            ticks: { color: '#94a3b8' } 
+                        }
                     }
                 }
             });
         };
 
         function toggleNotifications() {
-            alert("🛎️ Notifikasi Baru:\n\n• Target bulan ini tercapai\n• 12 pengguna baru bergabung\n• Update sistem v2.1 tersedia");
+            alert("🛎️ Notifikasi Terbaru:\n\n1. Target penjualan bulan ini tercapai!\n2. 18 pengguna baru mendaftar hari ini\n3. Update sistem tersedia");
         }
     </script>
 </body>
